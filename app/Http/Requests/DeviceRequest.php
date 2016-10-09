@@ -22,15 +22,20 @@ class DeviceRequest extends Request {
      */
     public function rules() {
         return [
-            'temp' => 'required',
-            'humidity' => 'required',
-            'dewpoint' => 'required',
-            'pressure' => 'required',
-            'light' => 'required',
-            'rain' => 'required',
+            'SerialNumber' => 'required|size:10',
+            'address' => 'required',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'threshold' => 'required|integer',
         ];
     }
 
+    public function messages() {
+        return [
+            //'SerialNumber.required' => 'กรุณากรอกรหัสอุปกรณ์',
+        ];
+    }
+    
     public function forbiddenResponse() {
         return response()->view('errors.503');
     }

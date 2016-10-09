@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Requests\DeviceRequest;
-
 use App\Device;
 
 class DeviceController extends Controller
 {
+        public function __construct() {
+        $this->middleware('auth',['except' => ['show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,10 +21,11 @@ class DeviceController extends Controller
      */
     public function index()
     {
-        $device = Device::all()-> last();
-        //$device = Device::where('pressure', '=', 1001.50)->get()->last();
+	$count = Device::count();
+        $device = Device::paginate(50);
         return view('device.index',[
-            'devices' => $device
+	    'count' => $count,
+            'devices' => $device,
         ]);
     }
 
@@ -32,9 +36,19 @@ class DeviceController extends Controller
      */
     public function create()
     {
-        //
+        //return view('device.create');
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function insert()
+    {
+        return view('device.insert');
+    }
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -47,18 +61,23 @@ class DeviceController extends Controller
         //$Device->name = $request->name;
         //$Device->save();
         $Device->create($request->all()); //$fillable
-        //return redirect()->action('DeviceController@index');
+        $request->session()->flash('status', 'บันทึกเรียบร้อยแล้ว');
+        //return back();
+        return redirect()->action('DeviceController@index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $SerialNumber
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($SerialNumber)
     {
-        //
+        $Dserialnumber = Device::where('SerialNumber', '=', $SerialNumber)->get()->last();
+        return view('device.show',[
+            'Dserialnumbers' => $Dserialnumber
+        ]); // Device/show.blade.php
     }
 
     /**
@@ -87,11 +106,12 @@ class DeviceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $SerialNumber
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($SerialNumber)
     {
-        //
+        $device = Device::where('SerialNumber', $SerialNumber)->delete();
+        return back();
     }
 }

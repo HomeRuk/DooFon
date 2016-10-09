@@ -12,11 +12,11 @@ class DeviceTableSeeder extends Seeder
     public function run()
     {
         $dv1 = new App\Device();
-        $dv1->SerialNumber = "0123456789";
+        $dv1->SerialNumber = "ATd4YVmd8B";
         $dv1->save();
         
         $dv2 = new App\Device();
-        $dv2->SerialNumber = "A123456789";
+        $dv2->SerialNumber = "ZgkL2LfL0Q";
         $dv2->save();
     }
 }

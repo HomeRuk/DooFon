@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-//Route::resource('/device', 'DeviceController');
-
+Route::get('/', 'HomeController@index');
+Route::auth();
+Route::get('/home', 'HomeController@index');
+Route::get('/weather/{SerialNumber}','WeatherController@show');
+Route::get('/device/{SerialNumber}','DeviceController@show');
 Route::resource('/weather', 'WeatherController');
+Route::resource('/device', 'DeviceController');
+Route::get('/devices/insert','DeviceController@insert');

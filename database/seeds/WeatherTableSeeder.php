@@ -11,7 +11,7 @@ class WeatherTableSeeder extends Seeder
      */
     public function run()
     {
-        $wt1 = new App\Weather();
+       /* $wt1 = new App\Weather();
         $wt1->temp = 31.5;
         $wt1->humidity = 55.1;
         $wt1->dewpoint = 21.5;
@@ -29,6 +29,6 @@ class WeatherTableSeeder extends Seeder
         $wt2->light = 200;
         $wt2->rain = 0;
         $wt2->SerialNumber = "A123456789";
-        $wt2->save();
+        $wt2->save();*/
     }
 }

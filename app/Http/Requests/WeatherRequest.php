@@ -22,10 +22,10 @@ class WeatherRequest extends Request {
      */
     public function rules() {
         return [
-            'temp' => 'required|numeric|min:0|max:100',
+            'temp' => 'required|numeric|min:-40|max:80',
             'humidity' => 'required|numeric|min:0|max:100',
             'dewpoint' => 'required|numeric|min:0|max:100',
-            'pressure' => 'required|numeric|min:0|max:1500',
+            'pressure' => 'required|numeric|min:300|max:1100',
             'light' => 'required|integer|min:0|max:1023',
             'rain' => 'required|in:0,1',
             'SerialNumber' => 'required|size:10',
