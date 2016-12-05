@@ -33,6 +33,6 @@ class HomeController extends Controller
  	    'countW' => $countW,
             'countD' => $countD,
 	]); //Home.blade.php
-
     }
+   
 }

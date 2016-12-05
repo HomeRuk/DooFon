@@ -28,6 +28,7 @@ class AuthController extends Controller
      *
      * @var string
      */
+    // Set redirect
     protected $redirectTo = '/';
 
     /**

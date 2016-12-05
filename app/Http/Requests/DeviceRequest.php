@@ -22,11 +22,11 @@ class DeviceRequest extends Request {
      */
     public function rules() {
         return [
-            'SerialNumber' => 'required|size:10',
-            'address' => 'required',
+            'SerialNumber' => 'required|size:10|unique:device',
+            //'FCMtoken' => 'required',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'threshold' => 'required|integer',
+            'threshold' => 'required|integer|min:0|max:100',
         ];
     }
 

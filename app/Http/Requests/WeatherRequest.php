@@ -24,7 +24,7 @@ class WeatherRequest extends Request {
         return [
             'temp' => 'required|numeric|min:-40|max:80',
             'humidity' => 'required|numeric|min:0|max:100',
-            'dewpoint' => 'required|numeric|min:0|max:100',
+            'dewpoint' => 'required|numeric|min:-40|max:80',
             'pressure' => 'required|numeric|min:300|max:1100',
             'light' => 'required|integer|min:0|max:1023',
             'rain' => 'required|in:0,1',

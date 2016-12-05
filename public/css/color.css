@@ -1,5 +1,11 @@
+.color-header{
+   color: #ffffff;
+}
+.bg-login{
+   background-color: #0069ff;     
+}
 .navbar-default {
-  background-color: #4fc3f7;
+  background-color: #0069ff;
   border-color: #03a9f4;
 }
 .navbar-default .navbar-brand {

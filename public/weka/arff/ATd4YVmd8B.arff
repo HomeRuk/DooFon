@@ -1,0 +1,10 @@
+@relation ATd4YVmd8B
+@attribute temp numeric
+@attribute humidity numeric
+@attribute dewpoint numeric
+@attribute pressure numeric
+@attribute light numeric
+@attribute rain {0, 1}
+
+@data
+5.00,10.00,25.30,1006.70,800,0

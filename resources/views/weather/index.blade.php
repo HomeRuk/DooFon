@@ -5,10 +5,10 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Lists Weather {{ $count }} list</div>      
+                <div class="panel-heading">Lists Weather {{ $count }} list</div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered"> 
+                        <table class="table table-bordered">
                             <thead>
                                 <tr class="active">
                                     <th>id</th>
@@ -52,9 +52,18 @@
     </div>
 </div>
 @endsection
-﻿<?php
-/* header('Content-Type: application/json; charset=utf-8');
-  $json = json_decode(Weathers);
-  echo json_encode($json, JSON_PRETTY_PRINT); */
+
+<?php
+/*
+  $arff = "@relation SerialNumber\r\n@attribute temp numeric\r\n@attribute humidity numeric\r\n@attribute dewpoint numeric\r\n@attribute pressure numeric\r\n@attribute light numeric\r\n@attribute rain {0, 1}\r\n\r\n@data\r\n";
+
+  $file = new SplFileObject('file.arff', 'w');
+  $file->fwrite($arff);
+  foreach ($Weathers as $Weather) {
+  $list2 = get_object_vars($Weather);
+  $file->fputcsv($list2);
+  dump($list2);
+  } */
 ?>
+
 

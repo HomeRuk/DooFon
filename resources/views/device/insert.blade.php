@@ -3,8 +3,8 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-custom-horrible-blue">
                 <div class="panel-heading">Add Device</div>
 
                 <div class="panel-body">
@@ -20,49 +20,44 @@
 
                     {!! Form::open(array('url' => 'device')) !!}
 
-                    <div class="col-md-4">
+
+                    <div class="col-md-11">
                         <div class="form-group">
-                            {{ Form::label('SerialNumber', 'SerialNumber')  }}
-                            {{ Form::text('SerialNumber',null,['class' => 'form-control','placeholder'=>'Ex. AsZsXsweRq']) }}
+                            {{ Form::label('SerialNumber', 'SerialNumber') }}
+                            {{ Form::text('SerialNumber',null,['class' => 'form-control input-lg','placeholder'=>'Ex. AsZsXsweRq','required autofocus']) }}
                         </div>
                     </div>
-
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            {{ Form::label('address', 'address')  }}
-                            {{ Form::text('address',null,['class' => 'form-control']) }}
-                        </div>
+                    <div class="col-md-1">
+                        <h2><i class="fa fa-refresh" onclick="makeSerialNumber()"></i></h2>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <div class="form-group">
                             {{ Form::label('latitude', 'latitude')  }}
-                            {{ Form::text('latitude',null,['class' => 'form-control','placeholder'=>'Ex. 101.123456']) }}
+                            {{ Form::text('latitude',null,['class' => 'form-control input-lg','placeholder'=>'Ex. 101.123456','required']) }}
                         </div>
                     </div>
-                    
-                    <div class="col-md-4">
+
+                    <div class="col-md-12">
                         <div class="form-group">
                             {{ Form::label('longitude', 'longitude')  }}
-                            {{ Form::text('longitude',null,['class' => 'form-control','placeholder'=>'Ex. 101.123456']) }}
+                            {{ Form::text('longitude',null,['class' => 'form-control input-lg','placeholder'=>'Ex. 101.123456','required']) }}
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <div class="form-group">
                             {{ Form::label('threshold', 'threshold')  }}
-                            {{ Form::number('threshold',null,['class' => 'form-control','placeholder'=>'Ex. 70']) }}
+                            {{ Form::number('threshold',null,['class' => 'form-control input-lg','placeholder'=>'Ex. 70','required']) }}
                         </div>
                     </div>
-                    
-                    <div class="col-sm-10">
+
+                    <div class="col-md-12">
                         <div class="form-group">
-                            {{ Form::submit('Save',['class' => 'btn btn-primary']) }}
+                            {{ Form::submit('Save',['class' => 'btn btn-lg btn-primary btn-block']) }}
                         </div>
                     </div>
-
                     {!! Form::close() !!}
-
                 </div>
             </div>
         </div>
@@ -72,15 +67,31 @@
 
 @section('footer')
 
+<script>
+    $(document).ready(makeSerialNumber());
+    function makeSerialNumber()
+    {
+        var SerialNumber = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (var i = 0; i < 10; i++) {
+            SerialNumber += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        //document.getElementById("SerialNumber").value =  (Math.random()+1).toString(36).substr(2, 10);
+        document.getElementById("SerialNumber").value = SerialNumber;
+        return false;
+    }
+</script>
+
+
 @if (session()->has('status')) 
 
 <script>
     swal({
-        title: '<?php echo session()->get('status'); ?>',
-        text: 'ผลการทำงาน',
+        title: '{{ session()->get('status') }}',
+        text: 'Save success',
         type: 'success',
         timer: 2000
-    })
+    });
 </script>
 
 @endif
@@ -88,11 +99,11 @@
 
 <script>
     swal({
-        title: 'ผิดพลาด',
-        text: 'กรุณาตรวจสอบการกรอกข้อมูล',
+        title: 'Error',
+        text: 'Please Check Data',
         type: 'error',
         timer: 2000
-    })
+    });
 </script>
 
 @endif

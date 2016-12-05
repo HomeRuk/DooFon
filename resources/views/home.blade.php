@@ -4,8 +4,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-custom-horrible-blue">
-                <div class="panel-heading">Dashboard</div>
+            <div class="panel panel-custom-horrible-blue" >
+                <div class="panel-heading"><h4>Overview</h4></div>
                 <div class="panel-body">
                     <div class="col-md-6">
                         <div class="panel panel-info">
@@ -55,5 +55,6 @@
             </div>
         </div>
     </div>
+</div>
 
-    @endsection
+@endsection

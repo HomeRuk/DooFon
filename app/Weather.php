@@ -14,6 +14,7 @@ class Weather extends Model
         'pressure',
         'light',
         'rain',
-        'SerialNumber'
+        'SerialNumber',
+        'PredictPercent'
     ];
 }

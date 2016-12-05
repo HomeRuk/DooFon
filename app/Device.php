@@ -9,7 +9,7 @@ class Device extends Model
     protected  $table = 'device';
     protected  $fillable = [
         'SerialNumber',
-        'address',
+        'FCMtoken',
         'latitude',
         'longitude',
         'threshold',

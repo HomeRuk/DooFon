@@ -3,21 +3,20 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Device จำนวน {{ $count }} เครื่อง</div>      
+            <a href="{{ url('devices/insert') }}" class="btn btn-lg btn-primary btn-block">Create Device</a>
+            <hr/>
+            <div class="panel panel-custom-horrible-blue">
+                <div class="panel-heading"><h4> Device จำนวน {{ $count }} เครื่อง</h4></div>      
                 <div class="panel-body">
-                    <a href="{{ url('devices/insert') }}" class="btn btn-primary">Create</a>  
-                    <hr/>
                     <div class="table-responsive">
                         <table class="table table-bordered"> 
                             <thead>
                                 <tr class="active">
                                     <th>SerialNumber</th>
-                                    <th>address</th>
                                     <th>latitude</th>
                                     <th>longitude</th>
-                                    <th>threshold</th>
-                                    <th>updated_at</th>
+                                    <th>Threshold</th>
+                                    <th>Updated_at</th>
                                     <th>Tools</th>
                                 </tr>
                             </thead>
@@ -25,7 +24,6 @@
                                 @foreach ($devices as $device)
                                 <tr>
                                     <td>{{ $device->SerialNumber }}</td>
-                                    <td>{{ $device->address }}</td>
                                     <td>{{ $device->latitude }}</td>
                                     <td>{{ $device->longitude }}</td>
                                     <td>{{ $device->threshold }}</td>
