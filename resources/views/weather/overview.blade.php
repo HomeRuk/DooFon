@@ -636,7 +636,7 @@ $chartLight = [
 ?>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-10 col-lg-offset-1">
+        <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-primary" >
                 <div class="panel-heading"><h4>Overview</h4></div>
                 <div class="panel-body">
@@ -665,31 +665,31 @@ $chartLight = [
                 </div>
             </div>
         </div>
-        <div class="col-md-10 col-lg-offset-1">
+        <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-custom-horrible-blue">
                 <div class="panel-heading">Temperature</div>
                 {!! Chart::display("Temperature", $chartTemp) !!}
             </div>
         </div>
-        <div class="col-md-10 col-lg-offset-1">
+        <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-custom-horrible-blue" >
                 <div class="panel-heading">Humidity</div>
                 {!! Chart::display("Humidity", $chartHumidity) !!}
             </div>
         </div>
-        <div class="col-md-10 col-lg-offset-1">
+        <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-custom-horrible-blue" >
                 <div class="panel-heading">Dewpoint</div>
                 {!! Chart::display("Dewpoint", $chartDewpoint) !!}
             </div>
         </div>
-        <div class="col-md-10 col-lg-offset-1">
+        <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-custom-horrible-blue" >
                 <div class="panel-heading">Pressure</div>
                 {!! Chart::display("Pressure", $chartPressure) !!}
             </div>
         </div>
-        <div class="col-md-10 col-lg-offset-1">
+        <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-custom-horrible-blue" >
                 <div class="panel-heading">Light</div>
                 {!! Chart::display("Light", $chartLight) !!}

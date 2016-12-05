@@ -13,19 +13,23 @@
                         <table class="table table-bordered"> 
                             <thead>
                                 <tr class="active">
+                                    <th>id</th>
                                     <th>Name</th>
+                                    <th>Mode</th>
                                     <th>Model</th>
+                                    <th>ExecuteTime</th>
                                     <th>Create_at</th>
-                                    <th>Updated_at</th>
                                     <th>Tools</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($models as $model)
                                 <tr>
+                                    <td>{{ $model->id }}</td>
                                     <td><a href="{{ url('model_predict/'.$model->id) }}">{{ $model->file }}</a></td>
+                                    <td>{{ $model->mode }} hr</td>
                                     <td>{{ $model->modelname }}</td>
-                                    <td>{{ $model->updated_at }} </td>
+                                    <td>{{ $model->exetime }} sec</td>
                                     <td>{{ $model->created_at }} </td>
                                     <td>
                                         {!! Form::open(array('url' => 'model_predict/'.$model->id,'method' => 'delete')) !!}

@@ -24,7 +24,7 @@
                     <div class="col-md-11">
                         <div class="form-group">
                             {{ Form::label('SerialNumber', 'SerialNumber') }}
-                            {{ Form::text('SerialNumber',null,['class' => 'form-control input-lg','placeholder'=>'Ex. AsZsXsweRq','required autofocus']) }}
+                            {{ Form::text('SerialNumber',null,['class' => 'form-control input-lg','placeholder'=>'Ex. AsZsXsweRq','disabled','required autofocus']) }}
                         </div>
                     </div>
                     <div class="col-md-1">

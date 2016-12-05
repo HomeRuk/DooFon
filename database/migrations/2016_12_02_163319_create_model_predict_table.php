@@ -14,8 +14,11 @@ class CreateModelPredictTable extends Migration
     {
         Schema::create('modelpredict', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('file')->unique()->collate('utf8_bin');
             $table->String('modelname');
-            $table->string('file')->unique();
+            $table->enum('mode', ['1', '2'])
+                    ->default('1');
+            $table->float('exetime', 6, 2);
             $table->timestamps();
         });
     }

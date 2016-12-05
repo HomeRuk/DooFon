@@ -10,11 +10,15 @@
                     <div class="col-md-12 well well-sm">
                         <div class="col-md-6">
                             <h4><b>Name: </b> {{$model->file}}</h4>
+                            <h4><b>Mode: </b>{{$model->mode}} Hour</h4>
                             <h4><b>Model: </b>{{$model->modelname}}</h4>
+                            <h4><b>ExecuteTime: </b>{{$model->exetime}} sec</h4>
                             <h4><b>Create_at: </b> {{$model->created_at}}</h4>
                             <h4><b>Updated_at: </b> {{$model->updated_at}}</h4>
                         </div>
                         <div class="col-md-6">
+                            <p><a href="{{ url('/model_predict/download/arff/'.$model->id) }}" class="btn btn-info btn-block"><b>Download Data/Arff</b></a></p>
+                            <p><a href="{{ url('/model_predict/download/model/'.$model->id) }}" class="btn btn-info btn-block"><b>Download Model</b></a></p>
                             <p><a href="{{ url('/model_predict/download/txt/'.$model->id) }}" class="btn btn-success btn-block"><b>Download Plain/Text</b></a></p>
                             <p><a href="{{ url('/model_predict/download/pdf/'.$model->id) }}" class="btn btn-success btn-block"><b>Download PDF</b></a></p>
                             <p><a href="{{ url('/model_predict/stream/pdf/'.$model->id) }}" class="btn btn-success btn-block"><b>Stream PDF</b></a></p> 

@@ -16,7 +16,6 @@
                         </ul>
                     </div>
                     @endif
-                    
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('model_predict') }}" accept-charset="UTF-8" enctype="multipart/form-data" onsubmit="return validate();">
                         {{ csrf_field() }}
                         <div class="col-md-12">
@@ -25,7 +24,17 @@
                                 <input class="form-control input-lg" type="file" id="data" name="data" required autofocus >
                             </div>
                         </div>
+                         <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="sel0">Mode : (1Hour, 2Hour) </label>
+                                <select class="form-control input-lg" id="selMode" name="selMode" >
+                                    <option value="1" selected>1 Hour</option>
+                                    <option value="2">2 Hour</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-md-12">
+                            <a href="../../../app/Http/Controllers/Model_PredictController.php"></a>
                             <div class="form-group">
                                 <label for="sel1">Model :</label>
                                 <select class="form-control input-lg" id="selModel" name="selModel" >

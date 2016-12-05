@@ -24,6 +24,8 @@ class CreateDeviceTable extends Migration {
                     ->default('0');
             $table->unsignedInteger('threshold')
                     ->default('70');
+            $table->enum('mode', ['1', '2'])
+                    ->default('1');
             $table->timestamps();
         });
     }

@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-10 col-md-offset-1">
             <a href="{{ url('devices/insert') }}" class="btn btn-lg btn-primary btn-block">Create Device</a>
             <hr/>
             <div class="panel panel-custom-horrible-blue">
@@ -16,6 +16,7 @@
                                     <th>latitude</th>
                                     <th>longitude</th>
                                     <th>Threshold</th>
+                                    <th>Mode</th>
                                     <th>Updated_at</th>
                                     <th>Tools</th>
                                 </tr>
@@ -27,6 +28,7 @@
                                     <td>{{ $device->latitude }}</td>
                                     <td>{{ $device->longitude }}</td>
                                     <td>{{ $device->threshold }}</td>
+                                    <td>{{ $device->mode }} hr</td>
                                     <td>{{ $device->updated_at }} </td>
                                     <td>
                                         <button class="btn btn-warning" href="{{ url('devices/'.$device->SerialNumber.'/edit') }}"><i class="fa fa-pencil"></i></button>

@@ -11,9 +11,11 @@ class Model_PredictTableSeeder extends Seeder
      */
     public function run()
     {
-        $model1 = new Model_Predict();
-        $model1->modelname = "RandomForest";
-        $model1->file = "1.arff";
-        $model1->save();
+        /*
+            $model1 = new Model_Predict();
+            $model1->modelname = "RandomForest";
+            $model1->file = "1.arff";
+            $model1->save();
+        */
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Requests\WeatherRequest;
 // model 
 use App\Weather;
 use App\Device;
+use App\Model_Predict;
 use DB;
 
 class WeatherController extends Controller {
@@ -42,13 +43,23 @@ class WeatherController extends Controller {
     public function store(WeatherRequest $request) {
         $Weather = new Weather();
         $Weather->create($request->all()); //$fillable
-        $rain = $request->rain;
+        
         $SerialNumber = $request->SerialNumber;
-        WeatherController::predict($SerialNumber);
+        $Device = Device::where('SerialNumber', '=', $SerialNumber)->get()->last();
+        $mode = $Device->mode;
+        WeatherController::predict($SerialNumber,$mode);
 
-        //return redirect('sent');
-        //$Weather->name = $request->name;
-        //$Weather->save();
+        
+        /*
+        $Weather->temp = $request->temp;
+        $Weather->humidity = $request->humidity;
+        $Weather->dewpoint = $request->dewpoint;
+        $Weather->pressure = $request->pressure;
+        $Weather->light = $request->light;
+        $Weather->rain = $request->rain;
+        $Weather->SerialNumber = $request->SerialNumber;
+        $Weather->save();
+         */
         //return redirect()->action('WeatherController@index');
     }
 
@@ -65,7 +76,7 @@ class WeatherController extends Controller {
         ]); // Weather/show.blade.php
     }
 
-    public static function predict($SerialNumber) {
+    public static function predict($SerialNumber,$mode) {
         //Connect
         $db_con = mysqli_connect('localhost', 'root', 'Ruk31332', 'webservice') or die('NO Connect to Database MySQL' . mysqli_connect_error());
         $sql = "SELECT temp, humidity, dewpoint, pressure, light, rain 
@@ -157,41 +168,97 @@ class WeatherController extends Controller {
         //$outputPrediction = ($outputPrediction1 + $outputPrediction2) / 2;
         // RandomForest
         // Run command shell for testing 1 last record weather  
-        $RandomForest = 'java -cp '
-                . public_path() . '/weka/weka.jar weka.classifiers.trees.RandomForest -T '
-                . public_path() . '/weka/arff/' . $SerialNumber . '.arff -l '
-                . public_path() . '/weka/model/RandomForest/RandomForest.model -p 0';
-        exec($RandomForest, $execOutput0);
+        /*
+          $RandomForest = 'java -cp '
+          . public_path() . '/weka/weka.jar weka.classifiers.trees.RandomForest -T '
+          . public_path() . '/weka/arff/' . $SerialNumber . '.arff -l '
+          . public_path() . '/weka/model/RandomForest/RandomForest.model -p 0';
+          exec($RandomForest, $execOutput0);
+          // Check exec RandomTree
+          if (sizeof($execOutput0) == 0) {
+          return; // exec error
+          }
+          // String array to string $outputs
+          $outputs0 = '';
+          for ($i = 0; $i < sizeof($execOutput0); $i++) {
+          $outputs0 = $outputs0 . trim($execOutput0[$i]);
+          }
+          // Filter output prediction
+          $outputRegex0 = preg_replace('/[^0-9.]/', '', $outputs0);
+          $outputPredicted0 = substr($outputRegex0, 4, 1);
+          $outputPrediction0 = substr($outputRegex0, 5);
+          switch ($outputPredicted0) {
+          case '0':
+          $outputPrediction0 = abs($outputPrediction0 - 1) * 100;
+          break;
+          case '1':
+          $outputPrediction0 = $outputPrediction0 * 100;
+          break;
+          default:
+          die("Error");
+          }
+         */
+        /*
+         ******* RandomForest *******
+         *********** Weka ***********
+         */
+        $oneHr = '1';
+        $twoHr = '2';
+        if($mode == $oneHr) {
+            //  1Hr
+            $Model = Model_Predict::where('mode', '=', $oneHr)->get()->last();
+            $file = $Model->file;
+            $RandomForest = 'java -cp '
+                    . public_path() . '/weka/weka.jar weka.classifiers.trees.RandomForest -T '
+                    . public_path() . '/weka/arff/' . $SerialNumber . '.arff -l '
+                    . public_path() . '/weka/model/RandomForest/'.$file.'.model -p 0 ';
+        } else if($mode ==$twoHr) {
+            //  2Hr
+            $Model = Model_Predict::where('mode', '=', $twoHr)->get()->last();
+            $file = $Model->file;
+            $RandomForest = 'java -cp '
+                    . public_path() . '/weka/weka.jar weka.classifiers.trees.RandomForest -T '
+                    . public_path() . '/weka/arff/' . $SerialNumber . '.arff -l '
+                    . public_path() . '/weka/model/RandomForest/'.$file.'.model -p 0 ';
+        }
+        
+        //Run command shell for testing 1 last record weather  
+        exec($RandomForest, $execOutput);
+        //dump($RandomForest);
         // Check exec RandomTree
-        if (sizeof($execOutput0) == 0) {
-            die("0"); // exec error
+        if (sizeof($execOutput) == 0) {
+            die('Error'); // exec error
         }
         // String array to string $outputs
-        $outputs0 = '';
-        for ($i = 0; $i < sizeof($execOutput0); $i++) {
-            $outputs0 = $outputs0 . trim($execOutput0[$i]);
+        $outputs = '';
+        for ($i = 0; $i < sizeof($execOutput); $i++) {
+            $outputs = $outputs . trim($execOutput[$i]);
         }
         // Filter output prediction 
-        $outputRegex0 = preg_replace('/[^0-9.]/', '', $outputs0);
-        $outputPredicted0 = substr($outputRegex0, 4, 1);
-        $outputPrediction0 = substr($outputRegex0, 5);
-        switch ($outputPredicted0) {
+        $outputRegex = preg_replace('/[^0-9.]/', '', $outputs);
+        // Result Predicted 0 or 1
+        $outputPredicted = substr($outputRegex, 4, 1);
+        // Result Prediction 0.00 - 1 
+        $outputPrediction = substr($outputRegex, 5);
+
+        // Check Resilt Prediction andCovert format to Class1
+        switch ($outputPredicted) {
             case '0':
-                $outputPrediction0 = abs($outputPrediction0 - 1) * 100;
+                $outputPrediction = abs($outputPrediction - 1) * 100;
                 break;
             case '1':
-                $outputPrediction0 = $outputPrediction0 * 100;
+                $outputPrediction = $outputPrediction * 100;
                 break;
             default:
                 die("Error");
         }
-        $outputPrediction = $outputPrediction0 + 100;
+
         // Notification to Device
         DeviceController::notificationPredict($SerialNumber, $outputPrediction);
 
         // Update PredictPercent to Database
-        WeatherController::updatePredict($SerialNumber, $outputPrediction);
-
+        WeatherController::updatePredict($SerialNumber, $outputPrediction, $mode);
+        
         /*  Debug
           // var_dump($execoutput);
           // dump($execOutput);
@@ -203,11 +270,12 @@ class WeatherController extends Controller {
     }
 
     // Update PredictPercent to Database
-    public static function updatePredict($SerialNumber, $outputPrediction) {
+    public static function updatePredict($SerialNumber, $outputPrediction, $mode) {
         // Update PredictPercent
-        $device = Weather::where('SerialNumber', '=', $SerialNumber)->orderBy('id', 'desc')->first()
+        $Weather = Weather::where('SerialNumber', '=', $SerialNumber)->orderBy('id', 'desc')->first()
                 ->update([
             'PredictPercent' => $outputPrediction,
+            'PredictMode' => $mode,
         ]);
         // Write Prediction output 
         $fpw = fopen(public_path() . '/weka/output/' . $SerialNumber . '.txt', 'w')or die("Unable to open file!");

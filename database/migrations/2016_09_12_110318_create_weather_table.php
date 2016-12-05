@@ -22,8 +22,10 @@ class CreateWeatherTable extends Migration {
                     ->default('0');
             $table->float('PredictPercent', 5, 2)
                     ->nullable();
-            $table->enum('PredictStatus', ['0', '1'])
+            $table->enum('TrainStatus', ['0', '1'])
                     ->default('0');
+            $table->enum('PredictMode', ['1', '2'])
+                    ->nullable();
             $table->String('SerialNumber', 10)
                     ->notnull();
             $table->foreign('SerialNumber')

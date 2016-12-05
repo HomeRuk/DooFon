@@ -12,7 +12,7 @@ class ModelRequest extends Request {
      * @return bool
      */
     public function authorize() {
-        return true; 
+        return true; //true ไม่ต้อง login
     }
 
     /**
@@ -36,10 +36,6 @@ class ModelRequest extends Request {
         return [
             //'SerialNumber.required' => 'กรุณากรอกรหัสอุปกรณ์',
         ];
-    }
-    
-    public function forbiddenResponse() {
-        return response()->view('errors.503');
     }
 
 }

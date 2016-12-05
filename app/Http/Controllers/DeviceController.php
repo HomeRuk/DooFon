@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\DeviceRequest;
+use App\Http\Requests\DeviceLocationRequest;
 use App\Http\Requests\DeviceThresholdRequest;
+use App\Http\Requests\DeviceFCMtokenRequest;
 use App\Device;
 use App\Weather;
 // user DB::
@@ -83,7 +85,7 @@ class DeviceController extends Controller {
     }
 
     // Update Setting Location of Device
-    public function updateLocation(Request $request) {
+    public function updateLocation(DeviceLocationRequest $request) {
         $SerialNumber = $request->SerialNumber;
         $latitude = $request->latitude;
         $longitude = $request->longitude;
@@ -111,11 +113,24 @@ class DeviceController extends Controller {
     }
 
     // Update FCMtoken Device to Database
-    public function updateFCMtoken(Request $request) {
+    public function updateFCMtoken(DeviceFCMtokenRequest $request) {
         $SerialNumber = $request->SerialNumber;
         $FCMtoken = $request->FCMtoken;
         $sid = $request->sid;
-        if ($FCMtoken == '0') $FCMtoken = NULL ;
+        if ($sid == 'Ruk') {
+            $device = Device::where('SerialNumber', '=', $SerialNumber)
+                    ->update([
+                'FCMtoken' => $FCMtoken,
+            ]);
+        }
+    }
+    
+     // Update Mode Device to Database
+    public function updateMode(Request $request) {
+        $SerialNumber = $request->SerialNumber;
+        $Mode = $request->Mode;
+        $sid = $request->sid;
+        if (strlen($FCMtoken) > 100 ) $FCMtoken = NULL ;
         if ($sid == 'Ruk') {
             $device = Device::where('SerialNumber', '=', $SerialNumber)
                     ->update([
