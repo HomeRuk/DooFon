@@ -52,7 +52,8 @@ class Model_PredictController extends Controller {
         if (!($request->hasFile('data'))) {
             return back();
         }
-        $genfilename = time() . '_' . str_random(10);
+        //$genfilename = time() . '_' . str_random(10);
+        $genfilename = str_random(10);
         $newfilename = $genfilename . '.' . $request->file('data')->getClientOriginalExtension();
         $request->file('data')->move(public_path() . '/weka/arff/train/', $newfilename);
 
@@ -71,21 +72,22 @@ class Model_PredictController extends Controller {
                     . ' -K ' . $K
                     . ' -S ' . $S
                     . ' -depth ' . $depth
-                    . ' ' . $D
-                    . ' -d ' . public_path() . '/weka/model/RandomForest/' . $genfilename . '.model '
-                    . ' -v -i> ' . public_path() . '/weka/output/RandomForest/' . $genfilename . '.txt';
-            //dump($RandomForest); 
+                    . $D
+                    . '-d ' . public_path() . '/weka/model/RandomForest/' . $genfilename . '.model '
+                    . ' -v -i > ' . public_path() . '/weka/output/RandomForest/' . $genfilename . '.txt';
+            dump($RandomForest); 
             exec($RandomForest);
         } else {
             return back();
         }
+        
         $time_end = microtime(true);
         $execution_time = ($time_end - $time_start);
         // Save To DB
         $model = new Model_Predict();
         $model->mode = $request->selMode;
-        $model->file = $genfilename;
-        $model->modelname = $request->selModel;
+        $model->modelname = $genfilename;
+        $model->model = $request->selModel;
         $model->exetime = $execution_time;
         $model->save();
         $request->session()->flash('status', 'Training Success');
@@ -104,7 +106,9 @@ class Model_PredictController extends Controller {
      */
     public function show($id) {
         $model = Model_Predict::find($id);
-        $textFile = public_path() . '\\weka\\output\\RandomForest\\' . $model->file . '.txt';
+        //$model = Model_Predict::where('modelname', '=', $modelname)->get();
+        //$textFile = public_path() . '\\weka\\output\\RandomForest\\' . $model->modelname . '.txt';
+        $textFile = public_path() . '/weka/output/RandomForest/' . $model->modelname . '.txt';
         $text = file($textFile);
         //$text = File::get($textFile);
         return view('model_predict.detail', [
@@ -121,9 +125,13 @@ class Model_PredictController extends Controller {
      */
     public function destroy($id) {
         $modelPredict = Model_Predict::find($id);
-        $arffFile = public_path() . '\\weka\\arff\\train\\' . $modelPredict->file . '.arff';
-        $modelFile = public_path() . '\\weka\\model\\RandomForest\\' . $modelPredict->file . '.model';
-        $textFile = public_path() . '\\weka\\output\\RandomForest\\' . $modelPredict->file . '.txt';
+        //$modelPredict = Model_Predict::where('modelname', '=', $modelname)->get();
+        //$arffFile = public_path() . '\\weka\\arff\\train\\' . $modelPredict->modelname . '.arff';
+        //$modelFile = public_path() . '\\weka\\model\\RandomForest\\' . $modelPredict->modelname . '.model';
+        //$textFile = public_path() . '\\weka\\output\\RandomForest\\' . $modelPredict->modelname . '.txt';
+        $arffFile = public_path() . '/weka/arff/train/' . $modelPredict->modelname . '.arff';
+        $modelFile = public_path() . '/weka/model/RandomForest/' . $modelPredict->modelname . '.model';
+        $textFile = public_path() . '/weka/output/RandomForest/' . $modelPredict->modelname . '.txt';
         File::delete($arffFile,$modelFile,$textFile);
         $modelPredict->delete();
         return redirect()->action('Model_PredictController@index');
@@ -132,43 +140,53 @@ class Model_PredictController extends Controller {
     // Download Data Arff
     public function downloadArff($id) {
         $model = Model_Predict::find($id);
-        $arffFile = public_path() . '\\weka\\arff\\train\\' . $model->file . '.arff';
+        //$model = Model_Predict::where('modelname', '=', $modelname)->get();
+        //$arffFile = public_path() . '\\weka\\arff\\train\\' . $model->modelname . '.arff';
+        $arffFile = public_path() . '/weka/arff/train/' . $model->modelname . '.arff';
         return response()->download($arffFile);
     }
     
     // Download Prediction Model
     public function downloadModel($id) {
         $model = Model_Predict::find($id);
-        $modelFile = public_path() . '\\weka\\model\\RandomForest\\' . $model->file . '.model';
+        //$model = Model_Predict::where('modelname', '=', $modelname)->get();
+        //$modelFile = public_path() . '\\weka\\odel\\RandomForest\\' . $model->modelname . '.model';
+        $modelFile = public_path() . '/weka/model/RandomForest/' . $model->modelname . '.model';
         return response()->download($modelFile);
     }
     
     // Download Report TXT
     public function downloadTXT($id) {
         $model = Model_Predict::find($id);
-        $textFile = public_path() . '\\weka\\output\\RandomForest\\' . $model->file . '.txt';
+        //$model = Model_Predict::where('modelname', '=', $modelname)->get();
+        //$textFile = public_path() . '\\weka\\output\\RandomForest\\' . $model->modelname . '.txt';
+        $textFile = public_path() . '/weka/output/RandomForest/' . $model->modelname . '.txt';
         return response()->download($textFile);
     }
     
     // Download Report PDF
     public function downloadPDF($id) {
         $model = Model_Predict::find($id);
-        $textFile = public_path() . '\\weka\\output\\RandomForest\\' . $model->file . '.txt';
+        //$model = Model_Predict::where('modelname', '=', $modelname)->get();
+        //$textFile = public_path() . '\\weka\\output\\RandomForest\\' . $model->modelname . '.txt';
+        $textFile = public_path() . '/weka/output/RandomForest/' . $model->modelname . '.txt';
         $text = file($textFile);
         //$text = File::get($textFile);
         $pdf = PDF::loadView('model_predict.modelpdf', ['model' => $model,'texts' => $text]);
         //return $pdf->stream($model->file.'.pdf');
-        return $pdf->download($model->file.'.pdf');
+        return $pdf->download($model->modelname.'.pdf');
     }
     
     // Download Report PDF
     public function streamPDF($id) {
         $model = Model_Predict::find($id);
-        $textFile = public_path() . '\\weka\\output\\RandomForest\\' . $model->file . '.txt';
+        //$model = Model_Predict::where('modelname', '=', $modelname)->get();
+        //$textFile = public_path() . '\\weka\\output\\RandomForest\\' . $model->modelname . '.txt';
+        $textFile = public_path() . '/weka/output/RandomForest/' . $model->modelname . '.txt';
         $text = file($textFile);
         //$text = File::get($textFile);
         $pdf = PDF::loadView('model_predict.modelpdf', ['model' => $model,'texts' => $text]);
-        return $pdf->stream($model->file.'.pdf');
+        return $pdf->stream($model->modelname.'.pdf');
     }
     
     /**

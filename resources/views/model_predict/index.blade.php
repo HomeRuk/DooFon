@@ -14,7 +14,7 @@
                             <thead>
                                 <tr class="active">
                                     <th>id</th>
-                                    <th>Name</th>
+                                    <th>ModelName</th>
                                     <th>Mode</th>
                                     <th>Model</th>
                                     <th>ExecuteTime</th>
@@ -26,9 +26,9 @@
                                 @foreach ($models as $model)
                                 <tr>
                                     <td>{{ $model->id }}</td>
-                                    <td><a href="{{ url('model_predict/'.$model->id) }}">{{ $model->file }}</a></td>
+                                    <td><a href="{{ url('model_predict/'.$model->id) }}">{{ $model->modelname }}</a></td>
                                     <td>{{ $model->mode }} hr</td>
-                                    <td>{{ $model->modelname }}</td>
+                                    <td>{{ $model->model }}</td>
                                     <td>{{ $model->exetime }} sec</td>
                                     <td>{{ $model->created_at }} </td>
                                     <td>

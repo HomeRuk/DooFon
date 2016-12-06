@@ -43,10 +43,10 @@ class WeatherController extends Controller {
     public function store(WeatherRequest $request) {
         $Weather = new Weather();
         $Weather->create($request->all()); //$fillable
-        
         $SerialNumber = $request->SerialNumber;
         $Device = Device::where('SerialNumber', '=', $SerialNumber)->get()->last();
         $mode = $Device->mode;
+        dump($mode);
         WeatherController::predict($SerialNumber,$mode);
 
         
@@ -207,28 +207,28 @@ class WeatherController extends Controller {
         if($mode == $oneHr) {
             //  1Hr
             $Model = Model_Predict::where('mode', '=', $oneHr)->get()->last();
-            $file = $Model->file;
+            $modelname = $Model->modelname;
             $RandomForest = 'java -cp '
                     . public_path() . '/weka/weka.jar weka.classifiers.trees.RandomForest -T '
                     . public_path() . '/weka/arff/' . $SerialNumber . '.arff -l '
-                    . public_path() . '/weka/model/RandomForest/'.$file.'.model -p 0 ';
-        } else if($mode ==$twoHr) {
+                    . public_path() . '/weka/model/RandomForest/'.$modelname.'.model -p 0 ';
+        } else if($mode == $twoHr) {
             //  2Hr
             $Model = Model_Predict::where('mode', '=', $twoHr)->get()->last();
-            $file = $Model->file;
+            $modelname = $Model->modelname;
             $RandomForest = 'java -cp '
                     . public_path() . '/weka/weka.jar weka.classifiers.trees.RandomForest -T '
                     . public_path() . '/weka/arff/' . $SerialNumber . '.arff -l '
-                    . public_path() . '/weka/model/RandomForest/'.$file.'.model -p 0 ';
+                    . public_path() . '/weka/model/RandomForest/'.$modelname.'.model -p 0 ';
         }
         
         //Run command shell for testing 1 last record weather  
         exec($RandomForest, $execOutput);
-        //dump($RandomForest);
+        dump($RandomForest);
         // Check exec RandomTree
-        if (sizeof($execOutput) == 0) {
+        /*if (sizeof($execOutput) == 0) {
             die('Error'); // exec error
-        }
+        }*/
         // String array to string $outputs
         $outputs = '';
         for ($i = 0; $i < sizeof($execOutput); $i++) {
@@ -250,7 +250,7 @@ class WeatherController extends Controller {
                 $outputPrediction = $outputPrediction * 100;
                 break;
             default:
-                die("Error");
+                die("Error2");
         }
 
         // Notification to Device
@@ -272,11 +272,14 @@ class WeatherController extends Controller {
     // Update PredictPercent to Database
     public static function updatePredict($SerialNumber, $outputPrediction, $mode) {
         // Update PredictPercent
+        $Model = Model_Predict::where('mode', '=', $mode)->get()->last();
+        $model_id = $Model->id;
         $Weather = Weather::where('SerialNumber', '=', $SerialNumber)->orderBy('id', 'desc')->first()
                 ->update([
             'PredictPercent' => $outputPrediction,
-            'PredictMode' => $mode,
+            'model_id' => $model_id
         ]);
+        //dump($model_id);
         // Write Prediction output 
         $fpw = fopen(public_path() . '/weka/output/' . $SerialNumber . '.txt', 'w')or die("Unable to open file!");
         fwrite($fpw, $outputPrediction);

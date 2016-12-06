@@ -9,9 +9,9 @@
                 <div class="panel-body">
                     <div class="col-md-12 well well-sm">
                         <div class="col-md-6">
-                            <h4><b>Name: </b> {{$model->file}}</h4>
+                            <h4><b>Name: </b> {{$model->modelname}}</h4>
                             <h4><b>Mode: </b>{{$model->mode}} Hour</h4>
-                            <h4><b>Model: </b>{{$model->modelname}}</h4>
+                            <h4><b>Model: </b>{{$model->model}}</h4>
                             <h4><b>ExecuteTime: </b>{{$model->exetime}} sec</h4>
                             <h4><b>Create_at: </b> {{$model->created_at}}</h4>
                             <h4><b>Updated_at: </b> {{$model->updated_at}}</h4>

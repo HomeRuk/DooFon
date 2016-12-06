@@ -1,0 +1,36 @@
+
+Options: -I 10 -K 0 -S 1 -depth 0 
+
+Random forest of 10 trees, each constructed while considering 3 random features.
+Out of bag error: 0.0275
+
+
+
+
+
+=== Stratified cross-validation ===
+
+Correctly Classified Instances        2529               97.7958 %
+Incorrectly Classified Instances        57                2.2042 %
+Kappa statistic                          0.7616
+Mean absolute error                      0.0348
+Root mean squared error                  0.1343
+Relative absolute error                 33.2394 %
+Root relative squared error             58.7634 %
+Total Number of Instances             2586     
+
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.995     0.322      0.981     0.995     0.988      0.942    0
+                 0.678     0.005      0.898     0.678     0.773      0.942    1
+Weighted Avg.    0.978     0.304      0.977     0.978     0.976      0.942
+
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 2432   11 |    a = 0
+   46   97 |    b = 1
+

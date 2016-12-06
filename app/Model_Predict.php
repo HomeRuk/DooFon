@@ -9,6 +9,13 @@ class Model_Predict extends Model
     protected  $table = 'modelpredict';
     
     protected $fillable = [
-        'name'
+        'modelname',
+        'model',
+        'mode',
+        'exetime',
     ];
+    
+    public function weather() {
+        return $this->hasMany(Weather::class);
+    }
 }

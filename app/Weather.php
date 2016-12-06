@@ -16,6 +16,11 @@ class Weather extends Model
         'rain',
         'SerialNumber',
         'PredictPercent',
+        'model_id',
         'PredictMode'
     ];
+    
+    public function modelpredict() {
+        return $this->belongsTo(Model_Predict::class, 'model_id');
+    }
 }

@@ -11,7 +11,7 @@
     </head>
     <body>
     
-    <h4><b>FileName: </b> {{$model->file}}</h4>
+    <h4><b>FileName: </b> {{$model->modelname}}</h4>
     @foreach($texts as $text)
     {{$text}}<br>
     @endforeach

@@ -14,6 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(DeviceTableSeeder::class);
         $this->call(WeatherTableSeeder::class);
-        $this->call(Model_PredictTableSeeder::class);
+        $this->call(ModelPredictTableSeeder::class);
     }
 }

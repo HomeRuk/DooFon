@@ -19,7 +19,7 @@
                                     <th>light</th>
                                     <th>rain</th>
                                     <th>Predict%</th>
-                                    <th>PredictMode</th>
+                                    <th>Modelname</th>
                                     <th>SerialNumber</th>
                                     <th>updated_at</th>
                                 </tr>
@@ -35,7 +35,7 @@
                                     <td>{{ $Weather->light }} </td>
                                     <td>{{ $Weather->rain }} </td>
                                     <td>{{ $Weather->PredictPercent }}</td>
-                                    <td>{{ $Weather->PredictMode }} hr</td>
+                                    <td><a href="{{ url('model_predict/'.$Weather->model_id) }}">{{ $Weather->modelpredict->modelname}}</a></td>
                                     <td>{{ $Weather->SerialNumber }}</td>
                                     <td>{{ $Weather->updated_at }}</td>
                                 </tr>

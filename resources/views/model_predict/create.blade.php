@@ -40,7 +40,6 @@
                                 <select class="form-control input-lg" id="selModel" name="selModel" >
                                     <option value="0" selected>--- Please Select Model ---</option>
                                     <option value="RandomForest">RandomForest</option>
-                                    <option value="J48">J48</option>
                                 </select>
                             </div>
                         </div>
