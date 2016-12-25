@@ -39,6 +39,7 @@ class WeatherController extends Controller {
      *
      * @param  \Illuminate\Http\WeatherRequest  $request
      * @return \Illuminate\Http\Response
+     * URL Path : /Weather
      */
     public function store(WeatherRequest $request) {
         $Weather = new Weather();
@@ -46,19 +47,19 @@ class WeatherController extends Controller {
         $SerialNumber = $request->SerialNumber;
         $Device = Device::where('SerialNumber', '=', $SerialNumber)->get()->last();
         $mode = $Device->mode;
-        dump($mode);
-        WeatherController::predict($SerialNumber,$mode);
+        //dump($mode);
+        WeatherController::predict($SerialNumber, $mode);
 
-        
+
         /*
-        $Weather->temp = $request->temp;
-        $Weather->humidity = $request->humidity;
-        $Weather->dewpoint = $request->dewpoint;
-        $Weather->pressure = $request->pressure;
-        $Weather->light = $request->light;
-        $Weather->rain = $request->rain;
-        $Weather->SerialNumber = $request->SerialNumber;
-        $Weather->save();
+          $Weather->temp = $request->temp;
+          $Weather->humidity = $request->humidity;
+          $Weather->dewpoint = $request->dewpoint;
+          $Weather->pressure = $request->pressure;
+          $Weather->light = $request->light;
+          $Weather->rain = $request->rain;
+          $Weather->SerialNumber = $request->SerialNumber;
+          $Weather->save();
          */
         //return redirect()->action('WeatherController@index');
     }
@@ -76,9 +77,16 @@ class WeatherController extends Controller {
         ]); // Weather/show.blade.php
     }
 
-    public static function predict($SerialNumber,$mode) {
+    public static function predict($SerialNumber, $mode) {
         //Connect
         $db_con = mysqli_connect('localhost', 'root', 'Ruk31332', 'webservice') or die('NO Connect to Database MySQL' . mysqli_connect_error());
+        $WeatherLests = DB::select('SELECT temp, humidity, dewpoint, pressure, light, rain 
+                                    FROM weather 
+                                    WHERE SerialNumber = ? ORDER BY id DESC LIMIT 1;', [$SerialNumber]);
+        dump($WeatherLests);
+        foreach ($WeatherLests as $WeatherLest) {
+            echo $WeatherLest;
+        }
         $sql = "SELECT temp, humidity, dewpoint, pressure, light, rain 
 			FROM weather 
 			WHERE SerialNumber = '$SerialNumber' 
@@ -199,36 +207,36 @@ class WeatherController extends Controller {
           }
          */
         /*
-         ******* RandomForest *******
-         *********** Weka ***********
+         * ****** RandomForest *******
+         * ********** Weka ***********
          */
         $oneHr = '1';
         $twoHr = '2';
-        if($mode == $oneHr) {
+        if ($mode == $oneHr) {
             //  1Hr
             $Model = Model_Predict::where('mode', '=', $oneHr)->get()->last();
             $modelname = $Model->modelname;
             $RandomForest = 'java -cp '
                     . public_path() . '/weka/weka.jar weka.classifiers.trees.RandomForest -T '
                     . public_path() . '/weka/arff/' . $SerialNumber . '.arff -l '
-                    . public_path() . '/weka/model/RandomForest/'.$modelname.'.model -p 0 ';
-        } else if($mode == $twoHr) {
+                    . public_path() . '/weka/model/RandomForest/' . $modelname . '.model -p 0 ';
+        } else if ($mode == $twoHr) {
             //  2Hr
             $Model = Model_Predict::where('mode', '=', $twoHr)->get()->last();
             $modelname = $Model->modelname;
             $RandomForest = 'java -cp '
                     . public_path() . '/weka/weka.jar weka.classifiers.trees.RandomForest -T '
                     . public_path() . '/weka/arff/' . $SerialNumber . '.arff -l '
-                    . public_path() . '/weka/model/RandomForest/'.$modelname.'.model -p 0 ';
+                    . public_path() . '/weka/model/RandomForest/' . $modelname . '.model -p 0 ';
         }
-        
+
         //Run command shell for testing 1 last record weather  
         exec($RandomForest, $execOutput);
         dump($RandomForest);
         // Check exec RandomTree
-        /*if (sizeof($execOutput) == 0) {
-            die('Error'); // exec error
-        }*/
+        /* if (sizeof($execOutput) == 0) {
+          die('Error'); // exec error
+          } */
         // String array to string $outputs
         $outputs = '';
         for ($i = 0; $i < sizeof($execOutput); $i++) {
@@ -258,7 +266,7 @@ class WeatherController extends Controller {
 
         // Update PredictPercent to Database
         WeatherController::updatePredict($SerialNumber, $outputPrediction, $mode);
-        
+
         /*  Debug
           // var_dump($execoutput);
           // dump($execOutput);

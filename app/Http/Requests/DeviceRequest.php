@@ -12,7 +12,7 @@ class DeviceRequest extends Request {
      * @var string
      */
     // redirect ถ้าไม่เป็นไปตาม rule 
-    protected $redirect = 'device';
+    //protected $redirect = 'device';
     
     /**
      * Determine if the user is authorized to make this request.
@@ -34,6 +34,7 @@ class DeviceRequest extends Request {
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'threshold' => 'required|integer|min:0|max:100',
+            'mode' => 'required|integer|min:1|max:2',
         ];
     }
 
@@ -41,10 +42,6 @@ class DeviceRequest extends Request {
         return [
             //'SerialNumber.required' => 'กรุณากรอกรหัสอุปกรณ์',
         ];
-    }
-    
-    public function forbiddenResponse() {
-        return response()->view('errors.503');
     }
 
 }

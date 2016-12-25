@@ -16,7 +16,7 @@ use DB;
 class DeviceController extends Controller {
 
     public function __construct() {
-        $this->middleware('auth', ['except' => ['show', 'updateLocation', 'updateThreshold', 'updateFCMtoken']]);
+        $this->middleware('auth', ['except' => ['show', 'updateLocation', 'updateThreshold', 'updateFCMtoken', 'updateMode']]);
     }
 
     /**
@@ -54,8 +54,8 @@ class DeviceController extends Controller {
         //$Device->save();
         $Device->create($request->all()); //$fillable
         $request->session()->flash('status', 'Save success');
-        return back();
-        //return redirect()->action('DeviceController@index');
+        //return back();
+        //return redirect()->action('DeviceController@insert');
     }
 
     /**
@@ -117,6 +117,7 @@ class DeviceController extends Controller {
         $SerialNumber = $request->SerialNumber;
         $FCMtoken = $request->FCMtoken;
         $sid = $request->sid;
+        if (strlen($FCMtoken) < 100 ) $FCMtoken = NULL ;
         if ($sid == 'Ruk') {
             $device = Device::where('SerialNumber', '=', $SerialNumber)
                     ->update([
@@ -128,13 +129,12 @@ class DeviceController extends Controller {
      // Update Mode Device to Database
     public function updateMode(Request $request) {
         $SerialNumber = $request->SerialNumber;
-        $Mode = $request->Mode;
+        $mode = $request->mode;
         $sid = $request->sid;
-        if (strlen($FCMtoken) > 100 ) $FCMtoken = NULL ;
         if ($sid == 'Ruk') {
             $device = Device::where('SerialNumber', '=', $SerialNumber)
                     ->update([
-                'FCMtoken' => $FCMtoken,
+                'mode' => $mode,
             ]);
         }
     }

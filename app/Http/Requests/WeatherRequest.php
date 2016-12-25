@@ -12,7 +12,7 @@ class WeatherRequest extends Request {
      * @return bool
      */
     public function authorize() {
-        return true; //true ไม่ต้อง login
+        return true; //true ไม่ต้อง auth
     }
 
     /**

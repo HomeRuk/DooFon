@@ -24,7 +24,7 @@
                     <div class="col-md-11">
                         <div class="form-group">
                             {{ Form::label('SerialNumber', 'SerialNumber') }}
-                            {{ Form::text('SerialNumber',null,['class' => 'form-control input-lg','placeholder'=>'Ex. AsZsXsweRq','disabled','required autofocus']) }}
+                            {{ Form::text('SerialNumber',null,['class' => 'form-control input-lg','placeholder'=>'Ex. AsZsXsweRq','required autofocus']) }}
                         </div>
                     </div>
                     <div class="col-md-1">
@@ -48,7 +48,14 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             {{ Form::label('threshold', 'threshold')  }}
-                            {{ Form::number('threshold',null,['class' => 'form-control input-lg','placeholder'=>'Ex. 70','required']) }}
+                            {{ Form::number('threshold',null,['class' => 'form-control input-lg','placeholder'=>'Ex. 70','required','min'=>'1','max'=>'100']) }}
+                        </div>
+                    </div>
+                    
+                     <div class="col-md-12">
+                        <div class="form-group">
+                            {{ Form::label('mode(1Hour,2Hour)', 'mode(1Hour,2Hour)')  }}
+                            {{ Form::number('mode',null,['class' => 'form-control input-lg','placeholder'=>'Ex. 1','required','min'=>'1','max'=>'2']) }}
                         </div>
                     </div>
 
