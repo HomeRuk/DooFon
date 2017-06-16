@@ -31,7 +31,8 @@ class DeviceFCMtokenRequest extends Request {
     public function rules() {
         return [
             'SerialNumber' => 'required|size:10',
-            'FCMtoken' => 'required|string|min:140|max:160',
+            //'FCMtoken' => 'required|string|min:140|max:160'
+            'FCMtoken' => 'required|string|max:160',
             'sid' => 'required',
         ];
     }

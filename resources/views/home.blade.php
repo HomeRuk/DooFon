@@ -5,9 +5,9 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-custom-horrible-blue" >
-                <div class="panel-heading"><h4>Overview</h4></div>
+                <div class="panel-heading"><h4>Dashboard</h4></div>
                 <div class="panel-body">
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="panel panel-info">
                             <div class="panel-heading">
                                 <div class="row">
@@ -29,7 +29,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="panel panel-success ">
                             <div class="panel-heading">
                                 <div class="row">
@@ -51,7 +51,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="panel panel-warning">
                             <div class="panel-heading">
                                 <div class="row">

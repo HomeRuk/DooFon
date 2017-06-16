@@ -49,8 +49,6 @@ class WeatherController extends Controller {
         $mode = $Device->mode;
         //dump($mode);
         WeatherController::predict($SerialNumber, $mode);
-
-
         /*
           $Weather->temp = $request->temp;
           $Weather->humidity = $request->humidity;
@@ -83,10 +81,10 @@ class WeatherController extends Controller {
         $WeatherLests = DB::select('SELECT temp, humidity, dewpoint, pressure, light, rain 
                                     FROM weather 
                                     WHERE SerialNumber = ? ORDER BY id DESC LIMIT 1;', [$SerialNumber]);
-        dump($WeatherLests);
+        /*dump($WeatherLests);
         foreach ($WeatherLests as $WeatherLest) {
             echo $WeatherLest;
-        }
+        }*/
         $sql = "SELECT temp, humidity, dewpoint, pressure, light, rain 
 			FROM weather 
 			WHERE SerialNumber = '$SerialNumber' 
@@ -102,13 +100,14 @@ class WeatherController extends Controller {
                 . "@attribute dewpoint numeric\r\n"
                 . "@attribute pressure numeric\r\n"
                 . "@attribute light numeric\r\n"
-                . "@attribute rain {0, 1}\r\n\r\n"
+                . "@attribute rain {1, 0}\r\n\r\n"
                 . "@data\r\n";
         fwrite($fp, $arff);
         while ($row = mysqli_fetch_assoc($result)) {
             fputcsv($fp, $row);
         }
         fclose($fp);
+        
         /*
           // RandomTree
           // Run command shell for testing 1 last record weather
@@ -210,6 +209,7 @@ class WeatherController extends Controller {
          * ****** RandomForest *******
          * ********** Weka ***********
          */
+        /*
         $oneHr = '1';
         $twoHr = '2';
         if ($mode == $oneHr) {
@@ -229,7 +229,13 @@ class WeatherController extends Controller {
                     . public_path() . '/weka/arff/' . $SerialNumber . '.arff -l '
                     . public_path() . '/weka/model/RandomForest/' . $modelname . '.model -p 0 ';
         }
-
+*/
+        $RandomForest = 'java -cp '
+                    . public_path() . '/weka/weka.jar weka.classifiers.trees.RandomForest -T '
+                    . public_path() . '/weka/arff/' . $SerialNumber . '.arff -l '
+                    . public_path() . '/weka/model/RandomForest/' . "RandomForest_T100" . '.model -p 0 ';
+        
+        
         //Run command shell for testing 1 last record weather  
         exec($RandomForest, $execOutput);
         dump($RandomForest);
@@ -285,7 +291,7 @@ class WeatherController extends Controller {
         $Weather = Weather::where('SerialNumber', '=', $SerialNumber)->orderBy('id', 'desc')->first()
                 ->update([
             'PredictPercent' => $outputPrediction,
-            'model_id' => $model_id
+            //'model_id' => $model_id
         ]);
         //dump($model_id);
         // Write Prediction output 

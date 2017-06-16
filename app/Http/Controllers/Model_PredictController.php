@@ -21,11 +21,22 @@ class Model_PredictController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $count = Model_Predict::count();
         $model = Model_Predict::paginate(10);
         return view('model_predict.index', [
             'models' => $model,
         ]); //model_predict/index.blade.php
+    }
+    
+    /**
+     * Overview Model_Predict 
+     * Display count,  
+     * @return \Illuminate\Http\Response
+     */
+    public function overview() {
+        $count = Model_Predict::count();
+        return view('model_predict.overview', [
+            'count' => $count,
+        ]); //model_predict/overview.blade.php
     }
 
     /**

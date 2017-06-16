@@ -48,7 +48,7 @@
                     @if (!Auth::guest())
                     <ul class="nav navbar-nav">
                         <li><a href="{{ url('/') }}"><i class="glyphicon glyphicon-home"></i> Home</a></li>
-                        <li><a href="{{ url('/device/') }}"><i class="fa fa-plus"></i> Device</a></li>
+                        <li><a href="{{ url('/devices/overview') }}"><i class="fa fa-plus"></i> Device</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                <span class="caret"></span> Weather
@@ -63,7 +63,8 @@
                                 <li><a href="{{ url('/weathers/overview#Light') }}">Light</a></li>
                             </ul>
                         </li>
-                        <li><a href="{{ url('/model_predict') }}"><i class="glyphicon glyphicon-save"></i> Model</a></li>
+                        <li><a href="{{ url('/model_predicts/overview') }}"><i class="glyphicon glyphicon-save"></i> Model</a></li>
+                        <li><a href="{{ url('/register') }}"><i class="fa fa-plus"></i> Create Account</a></li>
                         
                     </ul>  
                     <!-- Right Side Of Navbar -->

@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-custom-horrible-blue">
-                <div class="panel-heading">Prediction Model Weather</div>      
+                <div class="panel-heading"><h4>Create Model Weather</h4></div>      
                 <div class="panel-body">
                     @if (count($errors) > 0)
                     <div class="alert alert-danger">
@@ -24,15 +24,17 @@
                                 <input class="form-control input-lg" type="file" id="data" name="data" required autofocus >
                             </div>
                         </div>
-                         <div class="col-md-12">
+                        
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label for="sel0">Mode : (1Hour, 2Hour) </label>
+                                <label for="sel0">Mode : (2Hour) </label>
                                 <select class="form-control input-lg" id="selMode" name="selMode" >
-                                    <option value="1" selected>1 Hour</option>
+                                    <!--<option value="1" selected>1 Hour</option>-->
                                     <option value="2">2 Hour</option>
                                 </select>
                             </div>
                         </div>
+                        
                         <div class="col-md-12">
                             <a href="../../../app/Http/Controllers/Model_PredictController.php"></a>
                             <div class="form-group">

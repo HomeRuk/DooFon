@@ -33,7 +33,7 @@
                                     <td>{{ $Weather->dewpoint }}</td>
                                     <td>{{ $Weather->pressure }}</td>
                                     <td>{{ $Weather->light }} </td>
-                                    <td>{{ $Weather->rain }} </td>
+                                    
                                     <td>{{ $Weather->PredictPercent }}</td>
                                     <td><a href="{{ url('model_predict/'.$Weather->model_id) }}">{{ $Weather->modelpredict->modelname}}</a></td>
                                     <td>{{ $Weather->SerialNumber }}</td>

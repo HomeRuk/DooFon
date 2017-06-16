@@ -4,8 +4,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading"><h2>Register</h2></div>
+            <div class="panel panel-custom-horrible-blue">
+                <div class="panel-heading"><h4>Create Account</h4></div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
                         {{ csrf_field() }}
@@ -17,9 +17,9 @@
                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -31,9 +31,9 @@
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required >
 
                                 @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -45,9 +45,9 @@
                                 <input id="password" type="password" class="form-control" name="password" required>
 
                                 @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -59,9 +59,9 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
 
                                 @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -79,4 +79,33 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('footer')
+
+@if (session()->has('status')) 
+
+<script>
+    swal({
+        title: '{{ session()->get('status') }}',
+        text: 'Create success',
+        type: 'success',
+        timer: 2000
+    });
+</script>
+
+@endif
+@if (count($errors) > 0)
+
+<script>
+    swal({
+        title: 'Error',
+        text: 'Please Check Data',
+        type: 'error',
+        timer: 2000
+    });
+</script>
+
+@endif
+
 @endsection

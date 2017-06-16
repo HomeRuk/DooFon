@@ -23,7 +23,7 @@ class ModelRequest extends Request {
     public function rules() {
         return [
             'data' => 'required|file|mimetypes:text/plain|max:30720',
-            'selModel' => 'required|string',
+            //'selModel' => 'required|string',
             //'debug' => 'required',
             'maxDepth' => 'required|integer|min:0',
             'numFeatures' => 'required|integer|min:0',

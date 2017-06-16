@@ -3,35 +3,6 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <a href="{{ url('devices/insert') }}" class="btn btn-lg btn-primary btn-block">Create Device</a>
-            <hr/>
-            <div class="panel panel-primary" >
-                <div class="panel-heading"><h4>Overview</h4></div>
-                <div class="panel-body">
-                    <div class="col-md-12">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-mobile fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <h3>{{ $count }}</h3>
-                                        <h4>Device</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="{{ url('/device#active') }}">
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="panel panel-custom-horrible-blue">
                 <div class="panel-heading"><h4> Device จำนวน {{ $count }} เครื่อง</h4></div>      
                 <div class="panel-body">
@@ -45,7 +16,8 @@
                                     <th>Threshold</th>
                                     <th>Mode</th>
                                     <th>Updated_at</th>
-                                    <th>Tools</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,11 +30,13 @@
                                     <td>{{ $device->mode }} hr</td>
                                     <td>{{ $device->updated_at }} </td>
                                     <td>
-                                       <!-- 
-                                       <button class="btn btn-warning" href="{{ url('devices/'.$device->SerialNumber.'/edit') }}"><i class="fa fa-pencil"></i></button>-->
+                                        <div style="vertical-align: middle;">
+                                            <a class="btn btn-warning" href="{{ url('device/'.$device->SerialNumber.'/edit') }}"><i class="fa fa-pencil"></i></a>
+                                        </div>
+                                    </td>
+                                    <td>
                                         {!! Form::open(array('url' => 'device/'.$device->SerialNumber,'method' => 'delete')) !!} 
-                                       
-                                        <button class="btn btn-danger" ><i class="fa fa-trash"></i></button>
+                                        <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
@@ -77,9 +51,3 @@
     </div>
 </div>
 @endsection
-
-﻿<?php
-/* header('Content-Type: application/json; charset=utf-8');
-  $json = json_decode($devices);
-  echo json_encode($json, JSON_PRETTY_PRINT); */
-?>

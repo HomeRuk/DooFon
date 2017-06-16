@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
+//use App\Http\Requests;
 use App\Http\Requests\DeviceRequest;
 use App\Http\Requests\DeviceLocationRequest;
 use App\Http\Requests\DeviceThresholdRequest;
 use App\Http\Requests\DeviceFCMtokenRequest;
 use App\Device;
-use App\Weather;
+//use App\Weather;
 // user DB::
 use DB;
 
@@ -30,16 +30,28 @@ class DeviceController extends Controller {
         return view('device.index', [
             'count' => $count,
             'devices' => $device,
-        ]);
+        ]);// Device/index.blade.php
     }
-
+    
+    /**
+     * Overview Device 
+     * Display count,  
+     * @return \Illuminate\Http\Response
+     */
+    public function overview() {
+        $count = Device::count();
+        return view('device.overview', [
+            'count' => $count,
+        ]);// Device/overview.blade.php
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function insert() {
-        return view('device.insert');
+        return view('device.insert');// Device/insert.blade.php
     }
 
     /**
@@ -52,10 +64,12 @@ class DeviceController extends Controller {
         $Device = new Device();
         //$Device->name = $request->name;
         //$Device->save();
+        $Device->SerialNumber  = $request->SerialNumber;
         $Device->create($request->all()); //$fillable
-        $request->session()->flash('status', 'Save success');
-        //return back();
-        //return redirect()->action('DeviceController@insert');
+        $request->session()->flash('status', $Device->SerialNumber);
+        return back();
+        //return redirect()->action('DeviceController@index');
+        //return redirect('device');
     }
 
     /**
@@ -71,7 +85,7 @@ class DeviceController extends Controller {
         ]); // Device/show.blade.php
     }
 
-     /**
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $SerialNumber
@@ -116,8 +130,10 @@ class DeviceController extends Controller {
     public function updateFCMtoken(DeviceFCMtokenRequest $request) {
         $SerialNumber = $request->SerialNumber;
         $FCMtoken = $request->FCMtoken;
+        dump($request->FCMtoken);
         $sid = $request->sid;
-        if (strlen($FCMtoken) < 100 ) $FCMtoken = NULL ;
+        if ($FCMtoken === '0')
+            $FCMtoken = NULL;
         if ($sid == 'Ruk') {
             $device = Device::where('SerialNumber', '=', $SerialNumber)
                     ->update([
@@ -125,8 +141,8 @@ class DeviceController extends Controller {
             ]);
         }
     }
-    
-     // Update Mode Device to Database
+
+    // Update Mode Device to Database
     public function updateMode(Request $request) {
         $SerialNumber = $request->SerialNumber;
         $mode = $request->mode;
@@ -140,7 +156,7 @@ class DeviceController extends Controller {
     }
 
     // Notification prediction rain
-    public static function notificationPredict($SerialNumber,$outputPrediction){
+    public static function notificationPredict($SerialNumber, $outputPrediction) {
         $thresholds = DB::select('SELECT threshold FROM device WHERE SerialNumber = ? ', [$SerialNumber]);
         foreach ($thresholds as $threshold) {
             $threshold_target = $threshold->threshold;
@@ -151,7 +167,7 @@ class DeviceController extends Controller {
         }
         //dump($threshold_target);
     }
-    
+
     // Alert to device
     public static function alert($SerialNumber, $PredictPercent) {
         $FCMtokens = DB::select('SELECT FCMtoken FROM device WHERE SerialNumber = ? ', [$SerialNumber]);
@@ -194,7 +210,6 @@ class DeviceController extends Controller {
             echo $response;
         }
     }
-   
 
     /**
      * Update the specified resource in storage.
@@ -216,19 +231,37 @@ class DeviceController extends Controller {
       }
      */
 
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    /*
-     * public function edit($id) {
-      //
-      }
-     */
+    public function edit($SerialNumber) {
+        $device = Device::where('SerialNumber', '=', $SerialNumber)->get()->last();
+        return view('device.edit', [
+            'devices' => $device
+        ]); // Device/show.blade.php
+    }
 
+    public function update(Request $request, $SerialNumber) {
+        //dump($SerialNumber);
+        //$SerialNumber = $request->SerialNumber;
+        $latitude = $request->latitude;
+        $longitude = $request->longitude;
+        $threshold = $request->threshold;
+        $mode = $request->mode;
+        $device = Device::where('SerialNumber', '=', $SerialNumber)
+                ->update([
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'threshold' => $threshold,
+            //'mode' => $mode,
+        ]);
+        //dump($SerialNumber);
+        return redirect()->action('DeviceController@index');
+        //return back();
+    }
 
     /**
      * Show the form for creating a new resource.

@@ -34,7 +34,7 @@ class DeviceRequest extends Request {
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'threshold' => 'required|integer|min:0|max:100',
-            'mode' => 'required|integer|min:1|max:2',
+            //'mode' => 'required|integer|min:1|max:2',
         ];
     }
 
