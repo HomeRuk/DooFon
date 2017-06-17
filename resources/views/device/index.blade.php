@@ -1,43 +1,16 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <a href="{{ url('devices/insert') }}" class="btn btn-lg btn-primary btn-block">Create Device</a>
-            <hr/>
-            <div class="panel panel-primary" >
-                <div class="panel-heading"><h4>Overview</h4></div>
-                <div class="panel-body">
-                    <div class="col-md-12">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-mobile fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <h3>{{ $count }}</h3>
-                                        <h4>Device</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="{{ url('/device#active') }}">
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-custom-horrible-blue">
-                <div class="panel-heading"><h4> Device จำนวน {{ $count }} เครื่อง</h4></div>      
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered"> 
-                            <thead>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <a href="{{ url('/devices/create') }}" class="btn btn-lg btn-primary btn-block">Create Device</a>
+                <hr/>
+                <div class="panel panel-custom-horrible-blue">
+                    <div class="panel-heading"><h4> Device จำนวน {{ $devices->total() }} เครื่อง</h4></div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
                                 <tr class="active">
                                     <th>SerialNumber</th>
                                     <th>latitude</th>
@@ -47,35 +20,41 @@
                                     <th>Updated_at</th>
                                     <th>Tools</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 @foreach ($devices as $device)
-                                <tr>
-                                    <td>{{ $device->SerialNumber }}</td>
-                                    <td>{{ $device->latitude }}</td>
-                                    <td>{{ $device->longitude }}</td>
-                                    <td>{{ $device->threshold }}</td>
-                                    <td>{{ $device->mode }} hr</td>
-                                    <td>{{ $device->updated_at }} </td>
-                                    <td>
-                                       <!-- 
-                                       <button class="btn btn-warning" href="{{ url('devices/'.$device->SerialNumber.'/edit') }}"><i class="fa fa-pencil"></i></button>-->
-                                        {!! Form::open(array('url' => 'device/'.$device->SerialNumber,'method' => 'delete')) !!} 
-                                       
-                                        <button class="btn btn-danger" ><i class="fa fa-trash"></i></button>
-                                        {!! Form::close() !!}
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>{{ $device->SerialNumber }}</td>
+                                        <td>{{ $device->latitude }}</td>
+                                        <td>{{ $device->longitude }}</td>
+                                        <td>{{ $device->threshold }}</td>
+                                        <td>
+                                            @if(!empty($device->mode))
+                                                {{ $device->mode }} hr
+                                            @else
+                                                <div style="text-align: center;">-</div>
+                                            @endif
+                                        </td>
+                                        <td>{{ $device->updated_at }} </td>
+                                        <td>
+                                            <a class="btn btn-sm btn-warning" href="{{ url('/devices/'.$device->SerialNumber.'/edit') }}">
+                                                <span class="fa fa-pencil"></span>
+                                            </a>
+                                            {!! Form::open(array('url' => 'devices/'.$device->SerialNumber,'method' => 'delete','style'=>'display:inline')) !!}
+                                            <button class="btn btn-sm btn-danger"><span class="fa fa-trash"></span></button>
+                                            {!! Form::close() !!}
+                                        </td>
+                                    </tr>
                                 @endforeach
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
+                        {!! $devices->render() !!}
                     </div>
-                    {!! $devices->render() !!}
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 ﻿<?php

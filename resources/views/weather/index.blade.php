@@ -1,54 +1,66 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-custom-horrible-blue">
-                <div class="panel-heading"><h4>Lists Weather {{ $count }} list</h4></div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-custom-horrible-blue">
+                    <div class="panel-heading"><h4>Lists Weather {{ $Weathers->total() }} list</h4></div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
                                 <tr class="active">
-                                    <th>id</th>
-                                    <th>temp</th>
-                                    <th>humidity</th>
-                                    <th>dewpoint</th>
-                                    <th>pressure</th>
-                                    <th>light</th>
-                                    <th>rain</th>
+                                    <th>Id</th>
+                                    <th>Temp</th>
+                                    <th>Humidity</th>
+                                    <th>Dewpoint</th>
+                                    <th>Pressure</th>
+                                    <th>Light</th>
+                                    <th>Rain</th>
                                     <th>Predict%</th>
                                     <th>Modelname</th>
                                     <th>SerialNumber</th>
-                                    <th>updated_at</th>
+                                    <th>Updated_at</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 @foreach ($Weathers as $Weather)
-                                <tr>
-                                    <td>{{ $Weather->id }}</td>
-                                    <td>{{ $Weather->temp }}</td>
-                                    <td>{{ $Weather->humidity }}</td>
-                                    <td>{{ $Weather->dewpoint }}</td>
-                                    <td>{{ $Weather->pressure }}</td>
-                                    <td>{{ $Weather->light }} </td>
-                                    <td>{{ $Weather->rain }} </td>
-                                    <td>{{ $Weather->PredictPercent }}</td>
-                                    <td><a href="{{ url('model_predict/'.$Weather->model_id) }}">{{ $Weather->modelpredict->modelname}}</a></td>
-                                    <td>{{ $Weather->SerialNumber }}</td>
-                                    <td>{{ $Weather->updated_at }}</td>
-                                </tr>
+                                    <tr>
+                                        <td>{{ $Weather->id }}</td>
+                                        <td>{{ $Weather->temp }}</td>
+                                        <td>{{ $Weather->humidity }}</td>
+                                        <td>{{ $Weather->dewpoint }}</td>
+                                        <td>{{ $Weather->pressure }}</td>
+                                        <td>{{ $Weather->light }} </td>
+                                        <td>{{ $Weather->rain }} </td>
+                                        <td>
+                                            @if(!empty($Weather->PredictPercent))
+                                                {{ $Weather->PredictPercent }}
+                                            @else
+                                                <div style="text-align: center;">-</div>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if(!empty($Weather->model_id))
+                                                <a href="{{ url('model_predict/'.$Weather->modelpredict->id) }}">{{ $Weather->modelpredict->modelname}}</a>
+                                            @else
+                                                <div style="text-align: center;">-</div>
+                                            @endif
+                                        </td>
+                                        <td>{{ $Weather->SerialNumber }}</td>
+                                        <td>{{ $Weather->updated_at }}</td>
+                                    </tr>
                                 @endforeach
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
+                        {!! $Weathers->render() !!}
                     </div>
-                    {!! $Weathers->render() !!}
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 <?php

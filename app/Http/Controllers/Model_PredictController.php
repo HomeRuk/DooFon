@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use File;
 use PDF;
-use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Http\Requests\ModelRequest;
 use App\Model_Predict;
 
@@ -15,34 +13,17 @@ class Model_PredictController extends Controller {
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index() {
-        $count = Model_Predict::count();
         $model = Model_Predict::paginate(10);
         return view('model_predict.index', [
             'models' => $model,
         ]); //model_predict/index.blade.php
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create() {
         return view('model_predict.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(ModelRequest $request) {
         ini_set('max_execution_time', 300); 
         set_time_limit(0);
@@ -85,7 +66,7 @@ class Model_PredictController extends Controller {
         $execution_time = ($time_end - $time_start);
         // Save To DB
         $model = new Model_Predict();
-        $model->mode = $request->selMode;
+        //$model->mode = $request->selMode;
         $model->modelname = $genfilename;
         $model->model = $request->selModel;
         $model->exetime = $execution_time;
@@ -98,37 +79,21 @@ class Model_PredictController extends Controller {
         //$execution_time_format = number_format($execution_time, 2, '.', '');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id) {
         $model = Model_Predict::find($id);
         //$model = Model_Predict::where('modelname', '=', $modelname)->get();
-        //$textFile = public_path() . '\\weka\\output\\RandomForest\\' . $model->modelname . '.txt';
         $textFile = public_path() . '/weka/output/RandomForest/' . $model->modelname . '.txt';
         $text = file($textFile);
         //$text = File::get($textFile);
-        return view('model_predict.detail', [
+        return view('model_predict.show', [
             'model' => $model,
             'texts' => $text,
         ]);
     }
-    
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id) {
         $modelPredict = Model_Predict::find($id);
         //$modelPredict = Model_Predict::where('modelname', '=', $modelname)->get();
-        //$arffFile = public_path() . '\\weka\\arff\\train\\' . $modelPredict->modelname . '.arff';
-        //$modelFile = public_path() . '\\weka\\model\\RandomForest\\' . $modelPredict->modelname . '.model';
-        //$textFile = public_path() . '\\weka\\output\\RandomForest\\' . $modelPredict->modelname . '.txt';
         $arffFile = public_path() . '/weka/arff/train/' . $modelPredict->modelname . '.arff';
         $modelFile = public_path() . '/weka/model/RandomForest/' . $modelPredict->modelname . '.model';
         $textFile = public_path() . '/weka/output/RandomForest/' . $modelPredict->modelname . '.txt';
@@ -141,7 +106,6 @@ class Model_PredictController extends Controller {
     public function downloadArff($id) {
         $model = Model_Predict::find($id);
         //$model = Model_Predict::where('modelname', '=', $modelname)->get();
-        //$arffFile = public_path() . '\\weka\\arff\\train\\' . $model->modelname . '.arff';
         $arffFile = public_path() . '/weka/arff/train/' . $model->modelname . '.arff';
         return response()->download($arffFile);
     }
@@ -150,7 +114,6 @@ class Model_PredictController extends Controller {
     public function downloadModel($id) {
         $model = Model_Predict::find($id);
         //$model = Model_Predict::where('modelname', '=', $modelname)->get();
-        //$modelFile = public_path() . '\\weka\\odel\\RandomForest\\' . $model->modelname . '.model';
         $modelFile = public_path() . '/weka/model/RandomForest/' . $model->modelname . '.model';
         return response()->download($modelFile);
     }
@@ -159,7 +122,6 @@ class Model_PredictController extends Controller {
     public function downloadTXT($id) {
         $model = Model_Predict::find($id);
         //$model = Model_Predict::where('modelname', '=', $modelname)->get();
-        //$textFile = public_path() . '\\weka\\output\\RandomForest\\' . $model->modelname . '.txt';
         $textFile = public_path() . '/weka/output/RandomForest/' . $model->modelname . '.txt';
         return response()->download($textFile);
     }
@@ -168,7 +130,6 @@ class Model_PredictController extends Controller {
     public function downloadPDF($id) {
         $model = Model_Predict::find($id);
         //$model = Model_Predict::where('modelname', '=', $modelname)->get();
-        //$textFile = public_path() . '\\weka\\output\\RandomForest\\' . $model->modelname . '.txt';
         $textFile = public_path() . '/weka/output/RandomForest/' . $model->modelname . '.txt';
         $text = file($textFile);
         //$text = File::get($textFile);
@@ -181,36 +142,11 @@ class Model_PredictController extends Controller {
     public function streamPDF($id) {
         $model = Model_Predict::find($id);
         //$model = Model_Predict::where('modelname', '=', $modelname)->get();
-        //$textFile = public_path() . '\\weka\\output\\RandomForest\\' . $model->modelname . '.txt';
         $textFile = public_path() . '/weka/output/RandomForest/' . $model->modelname . '.txt';
         $text = file($textFile);
         //$text = File::get($textFile);
         $pdf = PDF::loadView('model_predict.modelpdf', ['model' => $model,'texts' => $text]);
         return $pdf->stream($model->modelname.'.pdf');
     }
-    
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    /*
-    public function edit($id) {
-        //
-    }
-     */
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    /*
-    public function update(Request $request, $id) {
-        //
-    }
-    */
 }

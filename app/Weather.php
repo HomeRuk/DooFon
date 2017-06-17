@@ -19,8 +19,13 @@ class Weather extends Model
         'model_id',
         'PredictMode'
     ];
-    
-    public function modelpredict() {
-        return $this->belongsTo(Model_Predict::class, 'model_id');
+
+    public function device() {
+        return $this->belongsTo('App\Device', 'SerialNumber');
     }
+
+    public function modelpredict() {
+        return $this->belongsTo('App\Model_Predict', 'model_id');
+    }
+
 }

@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-custom-horrible-blue" >
-                <div class="panel-heading"><h4>Overview</h4></div>
+                <div class="panel-heading"><h3>Overview</h3></div>
                 <div class="panel-body">
                     <div class="col-md-12">
                         <div class="panel panel-info">
@@ -20,7 +20,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="{{ url('/device') }}">
+                            <a href="{{ url('/devices') }}">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="{{ url('/weather') }}">
+                            <a href="{{ url('/weathers') }}">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

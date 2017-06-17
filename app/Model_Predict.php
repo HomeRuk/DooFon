@@ -11,11 +11,10 @@ class Model_Predict extends Model
     protected $fillable = [
         'modelname',
         'model',
-        'mode',
         'exetime',
     ];
     
     public function weather() {
-        return $this->hasMany(Weather::class);
+        return $this->hasMany('App\Weather');
     }
 }

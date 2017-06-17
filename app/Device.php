@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Device extends Model
 {
     protected  $table = 'device';
+
     protected  $fillable = [
         'SerialNumber',
         'FCMtoken',
@@ -14,4 +15,8 @@ class Device extends Model
         'longitude',
         'threshold',
     ];
+
+    public function weather(){
+        return $this->hasMany('App\Weather', 'SerialNumber');
+    }
 }

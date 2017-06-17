@@ -31,10 +31,10 @@ class DeviceRequest extends Request {
     public function rules() {
         return [
             'SerialNumber' => 'required|size:10|unique:device',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'threshold' => 'required|integer|min:0|max:100',
-            'mode' => 'required|integer|min:1|max:2',
+            //'latitude' => 'required|numeric',
+            //'longitude' => 'required|numeric',
+            //'threshold' => 'required|integer|min:0|max:100',
+            //'mode' => 'required|integer|min:1|max:2',
         ];
     }
 

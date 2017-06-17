@@ -14,6 +14,6 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         'weather',
         'device',
-        'device/update/*',
+        'devices/update/*',
     ];
 }

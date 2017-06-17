@@ -12,8 +12,8 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/4.0.7/sweetalert2.min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/1.6.6/lity.min.css" />
         <link rel="stylesheet" href="{{ asset('css/color.css') }}"  />
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}"  />
-        {{-- <link rel="stylesheet" href="{{ elixir('css/app.css') }}" /> --}}
+        {{--<link rel="stylesheet" href="{{ asset('css/app.css') }}"  /> --}}
+
         <style>
             body {
                 font-family: 'Athiti', sans-serif;
