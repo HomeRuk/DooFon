@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/4.0.7/sweetalert2.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/1.6.6/lity.min.css"/>
     <link rel="stylesheet" href="{{ asset('css/color.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}"/>
     {{--<link rel="stylesheet" href="{{ asset('css/app.css') }}"  /> --}}
 
     <style>
@@ -42,60 +43,54 @@
                 </button>
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <B>DooFon</B>
+                    <span class="fa fa-cloud"></span> <b>DooFon</b>
                 </a>
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
-                @if (!Auth::guest())
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/') }}"><i class="glyphicon glyphicon-home"></i> Home</a></li>
-                        <li><a href="{{ url('/devices/') }}"><i class="fa fa-plus"></i> Device</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                <span class="caret"></span> Weather
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/report/weather/overview') }}">Overview</a></li>
-                                <li class="divider"></li>
-                                <li><a href="{{ url('/weathers/overview#Temperature') }}">Temperature</a></li>
-                                <li><a href="{{ url('/weathers/overview#Humidity') }}">Humidity</a></li>
-                                <li><a href="{{ url('/weathers/overview#Dewpoint') }}">Dewpoint</a></li>
-                                <li><a href="{{ url('/weathers/overview#Pressure') }}">Pressure</a></li>
-                                <li><a href="{{ url('/weathers/overview#Light') }}">Light</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="{{ url('/model_predict') }}"><i class="glyphicon glyphicon-save"></i> Model</a>
-                        </li>
-
-                    </ul>
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                <i class="fa fa-user fa-fw"></i> Welcome {{ Auth::user()->name }} <span
-                                        class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                            <!--
-                                <li><a href="{{ url('/profiles/'.Auth::user()->id.'/edit/') }}"><i class="fa fa-btn fa-user"></i>แก้ไขข้อมูลส่วนตัว</a></li>
-                                -->
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Sign out</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                @endif
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ url('/devices/') }}"><i class="fa fa-mobile"></i> รายการอุปกรณ์IoT</a></li>
+                    <li><a href="{{ url('/map') }}"><i class="fa fa-map-marker"></i> แผนที่</a></li>
+                    <li><a href="{{ url('/model_predict') }}"><i class="fa fa-database"></i> โมเดลพยากรณ์</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            <span class="caret"></span> สภาพอากาศ
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ url('/report/weather/overview') }}">Overview</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ url('/weathers/overview#Temperature') }}">Temperature</a></li>
+                            <li><a href="{{ url('/weathers/overview#Humidity') }}">Humidity</a></li>
+                            <li><a href="{{ url('/weathers/overview#Dewpoint') }}">Dewpoint</a></li>
+                            <li><a href="{{ url('/weathers/overview#Pressure') }}">Pressure</a></li>
+                            <li><a href="{{ url('/weathers/overview#Light') }}">Light</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- Right Side Of Navbar -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            <i class="fa fa-user fa-fw"></i> ยินดีตอนรับ {{ Auth::user()->name }}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            {{--
+                            <li><a href="{{ url('/profiles/'.Auth::user()->id.'/edit/') }}"><i class="fa fa-btn fa-user"></i>แก้ไขข้อมูลส่วนตัว</a></li>
+                            --}}
+                            <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>ออกจากระบบ</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </nav>
 
 @yield('content')
-
 <!-- JavaScripts -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/sweetalert2/4.0.7/sweetalert2.min.js"></script>
