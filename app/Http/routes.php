@@ -29,6 +29,11 @@ Route::post('/api/device/update/FCMtoken','DeviceController@updateFCMtoken');
 Route::get('/map', 'MapController@index');
 // ChartReport Weather
 Route::get('/report/weather/overview','WeatherController@chartReport');
+
+// Download Training model & Data
+Route::get('/model_predict/download/arff/{model_predict}','Model_PredictController@downloadArff');
+Route::get('/model_predict/download/model/{model_predict}','Model_PredictController@downloadModel');
+// Download Report Training model
 Route::get('/model_predict/download/txt/{model_predict}','Model_PredictController@downloadTXT');
 Route::get('/model_predict/download/pdf/{model_predict}','Model_PredictController@downloadPDF');
 Route::get('/model_predict/stream/pdf/{model_predict}','Model_PredictController@streamPDF');
