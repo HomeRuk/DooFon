@@ -15,6 +15,6 @@ class Model_Predict extends Model
     ];
     
     public function weather() {
-        return $this->hasMany('App\Weather');
+        return $this->hasMany('App\Weather','model_id','id');
     }
 }

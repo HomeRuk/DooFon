@@ -16,7 +16,7 @@ class WeatherController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['show', 'store']]);
+        $this->middleware('auth', ['except' => ['getWeather', 'store']]);
     }
 
     /**
@@ -42,10 +42,6 @@ class WeatherController extends Controller
     {
         $Weather = new Weather();
         $Weather->create($request->all()); //$fillable
-        //$SerialNumber = $request->SerialNumber;
-        //$Device = Device::where('SerialNumber', '=', $SerialNumber)->get()->last();
-        //$mode = $Device->mode;
-        //dump($mode);
         WeatherController::predict($request->SerialNumber);
     }
 
@@ -59,7 +55,6 @@ class WeatherController extends Controller
 
     public static function predict($SerialNumber)
     {
-
         $WeatherLast = Weather::all()->last();
 
         $arffWeatherLast = "@relation $SerialNumber\r\n"
@@ -94,9 +89,9 @@ class WeatherController extends Controller
             . public_path() . '/weka/arff/' . $SerialNumber . '.arff -l '
             . public_path() . '/weka/model/RandomForest/' . $modelname . '.model -p 0 ';
 
-        //Run command shell for testing 1 last record weather  
+        //Run command shell for testing 1 last record weather
         exec($RandomForest, $execOutput);
-        dump($RandomForest);
+
         // Check exec RandomTree
         if (sizeof($execOutput) == 0) {
             die('Error exec'); // exec error
@@ -106,14 +101,14 @@ class WeatherController extends Controller
         for ($i = 0; $i < sizeof($execOutput); $i++) {
             $outputs = $outputs . trim($execOutput[$i]);
         }
-        // Filter output prediction 
+        // Filter output prediction
         $outputRegex = preg_replace('/[^0-9.]/', '', $outputs);
         // Result Predicted 0 or 1
         $outputPredicted = substr($outputRegex, 4, 1);
-        // Result Prediction 0.00 - 1 
+        // Result Prediction 0.00 - 1
         $outputPrediction = substr($outputRegex, 5);
 
-        // Check Resilt Prediction andCovert format to Class1
+        // Check result prediction and Convert format to class1
         switch ($outputPredicted) {
             case '0':
                 $outputPrediction = abs($outputPrediction - 1) * 100;
@@ -125,8 +120,8 @@ class WeatherController extends Controller
                 die("Error OutputPredicted");
         }
 
-        // Notification to Device
-        DeviceController::notificationPredict($SerialNumber, $outputPrediction);
+        // Notify to Device
+        DeviceController::notifyPredict($SerialNumber, $outputPrediction);
 
         // Update PredictPercent to Database
         WeatherController::updatePredict($SerialNumber, $outputPrediction);
@@ -152,6 +147,7 @@ class WeatherController extends Controller
                 'model_id' => $Model->id
             ]
         );
+
         // Write Prediction output 
         $fpw = fopen(public_path() . '/weka/output/' . $SerialNumber . '.txt', 'w') or die("Unable to open file!");
         fwrite($fpw, $outputPrediction);

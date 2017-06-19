@@ -16,7 +16,7 @@ class CreateModelpredictTable extends Migration {
             $table->increments('id');
             $table->String('modelname', 10)->collate('utf8_bin');
             $table->String('model');
-            $table->enum('mode', ['1', '2'])->default('1');
+            $table->enum('mode', ['1', '2'])->default('2');
             $table->float('exetime', 6, 2);
             $table->timestamps();
         });

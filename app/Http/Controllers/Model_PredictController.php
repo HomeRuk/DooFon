@@ -19,6 +19,18 @@ class Model_PredictController extends Controller {
             'models' => $model,
         ]); //model_predict/index.blade.php
     }
+    
+    /**
+     * Overview Model_Predict 
+     * Display count,  
+     * @return \Illuminate\Http\Response
+     */
+    public function overview() {
+        $count = Model_Predict::count();
+        return view('model_predict.overview', [
+            'count' => $count,
+        ]); //model_predict/overview.blade.php
+    }
 
     public function create() {
         return view('model_predict.create');

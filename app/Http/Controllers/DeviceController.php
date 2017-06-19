@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+//use App\Http\Requests;
+
 use App\Http\Requests\DeviceRequest;
 use App\Http\Requests\DeviceLocationRequest;
 use App\Http\Requests\DeviceThresholdRequest;
 use App\Http\Requests\DeviceFCMtokenRequest;
 use App\Device;
+use App\Weather;
 use DB;
 
 class DeviceController extends Controller
@@ -24,17 +28,37 @@ class DeviceController extends Controller
      * Method : GET
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $device = Device::paginate(50);
+        //$device = Device::paginate(10);
+        $searchSerialNumber = $request->get('search');
+        $device = Device::where('SerialNumber','like','%'.$searchSerialNumber.'%')->orderBy('SerialNumber','asc')->paginate(10);
         return view('device.index', [
             'devices' => $device,
-        ]);
+        ]);// Device/index.blade.php
     }
 
+    /**
+     * Overview Device
+     * Display count,
+     * @return \Illuminate\Http\Response
+     */
+    public function overview()
+    {
+        $count = Device::count();
+        return view('device.overview', [
+            'count' => $count,
+        ]);// Device/overview.blade.php
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
-        return view('device.create');
+        return view('device.create');// Device/create.blade.php
     }
 
     /**
@@ -56,7 +80,7 @@ class DeviceController extends Controller
 
     public function edit($SerialNumber)
     {
-        $device = Device::where('SerialNumber','=',$SerialNumber)->first();
+        $device = Device::where('SerialNumber', '=', $SerialNumber)->first();
         if (empty($device)) {
             abort(404);
         }
@@ -75,23 +99,42 @@ class DeviceController extends Controller
                     'longitude' => $request->longitude,
                 ]
             );
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
         }
         return redirect()->action('DeviceController@index');
     }
 
-    public function show($SerialNumber = null)
+    public function show($SerialNumber)
     {
-        $Dserialnumber = Device::where('SerialNumber', '=', $SerialNumber)->get()->last();
+        $device = Device::where('SerialNumber', '=', $SerialNumber)->first();
+        $dWeather = Weather::where('SerialNumber', '=', $SerialNumber)->orderBy('id', 'asc')->paginate(50);
+        //$lastWeather = Weather::where('SerialNumber', '=', $SerialNumber)->get()->last();
         return view('device.show', [
-            'Dserialnumbers' => $Dserialnumber
-        ]); // Device/show.blade.php
+            'device' => $device,
+            'dWeathers' => $dWeather,
+            //'lastWeather' => $lastWeather
+        ]); // Device/get.blade.php
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $SerialNumber
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($SerialNumber)
     {
+        //Remove row SerialNumber foreign key
         Device::where('SerialNumber', $SerialNumber)->delete();
-        return back();
+        return redirect()->action('DeviceController@index');
+    }
+
+    public function getDevice($SerialNumber = null)
+    {
+        $Dserialnumber = Device::where('SerialNumber', '=', $SerialNumber)->get()->last();
+        return view('device.get', [
+            'Dserialnumbers' => $Dserialnumber
+        ]); // Device/get.blade.php
     }
 
     // Update Setting Location of Device
@@ -131,8 +174,10 @@ class DeviceController extends Controller
     {
         $SerialNumber = $request->SerialNumber;
         $FCMtoken = $request->FCMtoken;
+        dump($request->FCMtoken);
         $sid = $request->sid;
         if (strlen($FCMtoken) < 100) $FCMtoken = NULL;
+        if ($FCMtoken === '0') $FCMtoken = NULL;
         if ($sid == 'Ruk') {
             Device::where('SerialNumber', '=', $SerialNumber)->update(
                 [
@@ -142,26 +187,10 @@ class DeviceController extends Controller
         }
     }
 
-    // Update Mode Device to Database
-    public function updateMode(Request $request)
-    {
-        $SerialNumber = $request->SerialNumber;
-        $mode = $request->mode;
-        $sid = $request->sid;
-        if ($sid == 'Ruk') {
-            Device::where('SerialNumber', '=', $SerialNumber)->update(
-                [
-                    'mode' => $mode,
-                ]
-            );
-        }
-    }
-
     // Notification prediction rain
-    public static function notificationPredict($SerialNumber, $outputPrediction)
+    public static function notifyPredict($SerialNumber, $outputPrediction)
     {
-        $device = Device::where('SerialNumber','=',$SerialNumber)->first();
-        // dump($device->threshold);
+        $device = Device::where('SerialNumber', '=', $SerialNumber)->first();
         // Compare PercentRainCurrent vs SettingThresholdDevice
         if ($outputPrediction >= $device->threshold) {
             DeviceController::alert($SerialNumber, $outputPrediction);
@@ -211,5 +240,4 @@ class DeviceController extends Controller
             echo $response;
         }
     }
-
 }

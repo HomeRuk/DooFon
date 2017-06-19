@@ -29,7 +29,7 @@
     @yield('header')
 </head>
 <body id="app-layout">
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
+<nav class="navbar navbar-default navbar-static-top navbar-fixed-top navbar-map" role="navigation">
     <div class="container-fluid">
         <div class="col-md-10 col-md-offset-1">
             <div class="navbar-header">
@@ -100,3 +100,4 @@
 @yield('footer')
 </body>
 </html>
+
