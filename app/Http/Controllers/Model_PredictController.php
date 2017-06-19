@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use File;
 use PDF;
+use Illuminate\Http\Request;
 use App\Http\Requests\ModelRequest;
 use App\Model_Predict;
 
@@ -13,8 +14,9 @@ class Model_PredictController extends Controller {
         $this->middleware('auth');
     }
 
-    public function index() {
-        $model = Model_Predict::paginate(10);
+    public function index(Request $request) {
+        $searchModelName = $request->get('search');
+        $model = Model_Predict::where('modelname','like','%'.$searchModelName.'%')->orderBy('id','asc')->paginate(10);
         return view('model_predict.index', [
             'models' => $model,
         ]); //model_predict/index.blade.php
@@ -39,8 +41,7 @@ class Model_PredictController extends Controller {
     public function store(ModelRequest $request) {
         ini_set('max_execution_time', 300); 
         set_time_limit(0);
-        // Count time exce
-        $time_start = microtime(true); 
+
         // Check upload 
         if (!($request->hasFile('data'))) {
             return back();
@@ -50,6 +51,8 @@ class Model_PredictController extends Controller {
         $newfilename = $genfilename . '.' . $request->file('data')->getClientOriginalExtension();
         $request->file('data')->move(public_path() . '/weka/arff/train/', $newfilename);
 
+        // Count time exce
+        $time_start = microtime(true);
         // Train RandomForest
         $model = $request->selModel;
         $I = $request->numTrees;
@@ -93,7 +96,6 @@ class Model_PredictController extends Controller {
 
     public function show($id) {
         $model = Model_Predict::find($id);
-        //$model = Model_Predict::where('modelname', '=', $modelname)->get();
         $textFile = public_path() . '/weka/output/RandomForest/' . $model->modelname . '.txt';
         $text = file($textFile);
         //$text = File::get($textFile);
@@ -105,7 +107,6 @@ class Model_PredictController extends Controller {
 
     public function destroy($id) {
         $modelPredict = Model_Predict::find($id);
-        //$modelPredict = Model_Predict::where('modelname', '=', $modelname)->get();
         $arffFile = public_path() . '/weka/arff/train/' . $modelPredict->modelname . '.arff';
         $modelFile = public_path() . '/weka/model/RandomForest/' . $modelPredict->modelname . '.model';
         $textFile = public_path() . '/weka/output/RandomForest/' . $modelPredict->modelname . '.txt';
@@ -117,7 +118,6 @@ class Model_PredictController extends Controller {
     // Download Data Arff
     public function downloadArff($id) {
         $model = Model_Predict::find($id);
-        //$model = Model_Predict::where('modelname', '=', $modelname)->get();
         $arffFile = public_path() . '/weka/arff/train/' . $model->modelname . '.arff';
         return response()->download($arffFile);
     }
@@ -125,7 +125,6 @@ class Model_PredictController extends Controller {
     // Download Prediction Model
     public function downloadModel($id) {
         $model = Model_Predict::find($id);
-        //$model = Model_Predict::where('modelname', '=', $modelname)->get();
         $modelFile = public_path() . '/weka/model/RandomForest/' . $model->modelname . '.model';
         return response()->download($modelFile);
     }
@@ -133,7 +132,6 @@ class Model_PredictController extends Controller {
     // Download Report TXT
     public function downloadTXT($id) {
         $model = Model_Predict::find($id);
-        //$model = Model_Predict::where('modelname', '=', $modelname)->get();
         $textFile = public_path() . '/weka/output/RandomForest/' . $model->modelname . '.txt';
         return response()->download($textFile);
     }
@@ -141,7 +139,6 @@ class Model_PredictController extends Controller {
     // Download Report PDF
     public function downloadPDF($id) {
         $model = Model_Predict::find($id);
-        //$model = Model_Predict::where('modelname', '=', $modelname)->get();
         $textFile = public_path() . '/weka/output/RandomForest/' . $model->modelname . '.txt';
         $text = file($textFile);
         //$text = File::get($textFile);
@@ -153,7 +150,6 @@ class Model_PredictController extends Controller {
     // Download Report PDF
     public function streamPDF($id) {
         $model = Model_Predict::find($id);
-        //$model = Model_Predict::where('modelname', '=', $modelname)->get();
         $textFile = public_path() . '/weka/output/RandomForest/' . $model->modelname . '.txt';
         $text = file($textFile);
         //$text = File::get($textFile);
