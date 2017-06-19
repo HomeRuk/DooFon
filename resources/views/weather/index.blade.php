@@ -11,17 +11,17 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr class="active">
-                                    <th>Id</th>
-                                    <th>Temp</th>
-                                    <th>Humidity</th>
-                                    <th>Dewpoint</th>
-                                    <th>Pressure</th>
-                                    <th>Light</th>
-                                    <th>Rain</th>
-                                    <th>Predict%</th>
-                                    <th>Modelname</th>
+                                    <th>ลำดับ</th>
+                                    <th>อุณหภูมิ</th>
+                                    <th>ความชื้น</th>
+                                    <th>อุณหภูมจุดน้ำค้าง</th>
+                                    <th>ความกดอากาศ</th>
+                                    <th>ความสว่าง</th>
+                                    <th>ค่าฝน</th>
+                                    <th>ค่าพยากรณ์ฝน%</th>
+                                    <th>ชื่อโมเดลในการพยากรณ์</th>
                                     <th>SerialNumber</th>
-                                    <th>Updated_at</th>
+                                    <th>อัพเดทล่าสุด</th>
                                 </tr>
                                 </thead>
                                 <tbody>
