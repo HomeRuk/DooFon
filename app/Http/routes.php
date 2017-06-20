@@ -17,7 +17,7 @@ Route::post('register', 'Auth\RegisterController@register');
 // Web App
 Route::resource('/weathers', 'WeatherController');
 Route::resource('/devices', 'DeviceController');
-Route::resource('/model_predict', 'Model_PredictController');
+Route::resource('/model_predicts', 'Model_PredictController');
 // API Show Value
 Route::get('/weather/{SerialNumber?}','WeatherController@getWeather');
 Route::get('/device/{SerialNumber?}','DeviceController@getDevice');
