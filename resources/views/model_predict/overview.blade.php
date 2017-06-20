@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <a href="{{ url('model_predict/create') }}" class="btn btn-lg btn-primary btn-block">Create Model</a> 
+            <a href="{{ url('/model_predicts/create') }}" class="btn btn-lg btn-primary btn-block">Create Model</a>
             <hr/>
             <div class="panel panel-primary" >
                 <div class="panel-heading"><h4>Model Overview</h4></div>

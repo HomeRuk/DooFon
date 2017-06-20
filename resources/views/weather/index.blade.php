@@ -43,7 +43,7 @@
                                         </td>
                                         <td>
                                             @if(!empty($Weather->model_id))
-                                                <a href="{{ url('model_predict/'.$Weather->modelpredict->id) }}">{{ $Weather->modelpredict->modelname}}</a>
+                                                <a href="{{ url('/model_predicts/'.$Weather->modelpredict->id) }}">{{ $Weather->modelpredict->modelname}}</a>
                                             @else
                                                 <div style="text-align: center;">-</div>
                                             @endif
