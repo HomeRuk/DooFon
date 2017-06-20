@@ -14,7 +14,7 @@ return [
     */
 
     //'failed' => 'These credentials do not match our records.',
-    'failed' => 'Invalid email or password',
+    'failed' => 'Invalid Username or Password',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];
