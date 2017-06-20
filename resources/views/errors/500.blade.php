@@ -36,8 +36,8 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Error 503 <br> Server หยุดให้บริการ</div>
-                <div class="content">กรุณารอสักครู่ ค่อยกับมาใช้บริการ หรือ แจ้งไปที่ผู้ดูแลระบบ</div>
+                <div class="title">Error 500 <br> บันทึกข้อมูลผิดพลาด</div>
+                <div class="content">กรุณาเปลี่ยนข้อมูล</div>
             </div>
         </div>
     </body>

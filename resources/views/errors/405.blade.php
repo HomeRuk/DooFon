@@ -36,8 +36,8 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Error 503 <br> Server หยุดให้บริการ</div>
-                <div class="content">กรุณารอสักครู่ ค่อยกับมาใช้บริการ หรือ แจ้งไปที่ผู้ดูแลระบบ</div>
+                <div class="title">Error 405 <br> หน้านี้ไม่สามารถใช้งานได้</div>
+                <h2><a href="{{ url('/') }}">หน้าหลัก</a></h2>
             </div>
         </div>
     </body>

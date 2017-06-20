@@ -36,8 +36,9 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Error 503 <br> Server หยุดให้บริการ</div>
-                <div class="content">กรุณารอสักครู่ ค่อยกับมาใช้บริการ หรือ แจ้งไปที่ผู้ดูแลระบบ</div>
+                <div class="title">Error 403<br>คุณไม่มีสิทธ์ในการเข้าหน้านี้</div>
+                <h2><a href="{{ url('/') }}">หน้าหลัก</a></h2>
+                <h2><a href="{{ url('/admin/logout') }}">ออกจากระบบ</a></h2>
             </div>
         </div>
     </body>
