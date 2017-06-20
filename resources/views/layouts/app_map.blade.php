@@ -52,7 +52,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/devices/') }}"><i class="fa fa-mobile"></i> รายการอุปกรณ์IoT</a></li>
                     <li><a href="{{ url('/map') }}"><i class="fa fa-map-marker"></i> แผนที่</a></li>
-                    <li><a href="{{ url('/model_predict') }}"><i class="fa fa-database"></i> โมเดลพยากรณ์</a></li>
+                    <li><a href="{{ url('/model_predicts') }}"><i class="fa fa-database"></i> โมเดลพยากรณ์</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">

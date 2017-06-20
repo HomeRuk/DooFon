@@ -52,7 +52,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/devices/') }}"><i class="fa fa-mobile"></i> รายการอุปกรณ์IoT</a></li>
                     <li><a href="{{ url('/map') }}"><i class="fa fa-map-marker"></i> แผนที่</a></li>
-                    <li><a href="{{ url('/model_predict') }}"><i class="fa fa-database"></i> โมเดลพยากรณ์</a></li>
+                    <li><a href="{{ url('/model_predicts') }}"><i class="fa fa-database"></i> โมเดลพยากรณ์</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">
@@ -61,11 +61,11 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ url('/report/weather/overview') }}">Overview</a></li>
                             <li class="divider"></li>
-                            <li><a href="{{ url('/weathers/overview#Temperature') }}">Temperature</a></li>
-                            <li><a href="{{ url('/weathers/overview#Humidity') }}">Humidity</a></li>
-                            <li><a href="{{ url('/weathers/overview#Dewpoint') }}">Dewpoint</a></li>
-                            <li><a href="{{ url('/weathers/overview#Pressure') }}">Pressure</a></li>
-                            <li><a href="{{ url('/weathers/overview#Light') }}">Light</a></li>
+                            <li><a href="{{ url('/report/weather/overview#Temperature') }}">Temperature</a></li>
+                            <li><a href="{{ url('/report/weather/overview#Humidity') }}">Humidity</a></li>
+                            <li><a href="{{ url('/report/weather/overview#Dewpoint') }}">Dewpoint</a></li>
+                            <li><a href="{{ url('/report/weather/overview#Pressure') }}">Pressure</a></li>
+                            <li><a href="{{ url('/report/weather/overview#Light') }}">Light</a></li>
                         </ul>
                     </li>
                 </ul>
