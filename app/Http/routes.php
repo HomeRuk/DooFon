@@ -14,21 +14,21 @@ Route::auth();
 Route::get('register', 'Auth\RegisterController@showRegistrationForm');
 Route::post('register', 'Auth\RegisterController@register');
 
+// API Show Value
+Route::get('/weather/{SerialNumber?}','Api\WeatherController@getWeather');
+Route::get('/device/{SerialNumber?}','Api\DeviceController@getDevice');
+// API Update Device
+Route::post('/api/device/update/location','Api\DeviceController@updateLocation');
+Route::post('/api/device/update/threshold','Api\DeviceController@updateThreshold');
+Route::post('/api/device/update/FCMtoken','Api\DeviceController@updateFCMtoken');
+
 // Web App
-Route::resource('/weathers', 'WeatherController');
 Route::resource('/devices', 'DeviceController');
 Route::resource('/model_predicts', 'Model_PredictController');
-// API Show Value
-Route::get('/weather/{SerialNumber?}','WeatherController@getWeather');
-Route::get('/device/{SerialNumber?}','DeviceController@getDevice');
-// API Update Device
-Route::post('/api/device/update/location','DeviceController@updateLocation');
-Route::post('/api/device/update/threshold','DeviceController@updateThreshold');
-Route::post('/api/device/update/FCMtoken','DeviceController@updateFCMtoken');
-//Route::post('/api/device/update/mode','DeviceController@updateMode');
 Route::get('/map', 'MapController@index');
-// ChartReport Weather
-Route::get('/report/weather/overview','WeatherController@chartReport');
+Route::get('/map/full', 'MapController@mapfull');
+Route::get('/report','WeatherController@chartReport');
+
 
 // Download Training model & Data
 Route::get('/model_predict/download/arff/{model_predict}','Model_PredictController@downloadArff');
