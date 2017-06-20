@@ -10,8 +10,8 @@
                         <span style="font-size:38px; margin-left: 2%">รายการโมเดลพยากรณ์ฝนตก</span>
                     </div>
                     <div class="col-md-2">
-                        <div class="col-md-5"></div>
-                        <div class="col-md-7">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-6">
                             <br>
                             <a href="{{ url('/model_predicts/create') }}" class="btn btn-blue">
                                 <span class="fa fa-plus-circle"></span> Create Model
@@ -35,10 +35,11 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered"> 
-                            <thead>
+                <div class="row">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
                                 <tr class="active">
                                     <th>Id</th>
                                     <th>ModelName</th>
@@ -48,30 +49,32 @@
                                     <th>Create_at</th>
                                     <th>Tools</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 @foreach ($models as $model)
-                                <tr>
-                                    <td>{{ $model->id }}</td>
-                                    <td><a href="{{ url('/model_predicts/'.$model->id) }}">{{ $model->modelname }}</a></td>
-                                    <td>2 hr</td>
-                                    <td>{{ $model->model }}</td>
-                                    <td>{{ $model->exetime }} sec</td>
-                                    <td>{{ $model->created_at }} </td>
-                                    <td>
-                                        {!! Form::open(array('url' => '/model_predicts/'.$model->id,'method' => 'delete')) !!}
-                                        <button class="btn btn-danger" ><i class="fa fa-trash"></i></button>
-                                        {!! Form::close() !!}
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>{{ $model->id }}</td>
+                                        <td>
+                                            <a href="{{ url('/model_predicts/'.$model->id) }}">{{ $model->modelname }}</a>
+                                        </td>
+                                        <td>2 hr</td>
+                                        <td>{{ $model->model }}</td>
+                                        <td>{{ $model->exetime }} sec</td>
+                                        <td>{{ $model->created_at }} </td>
+                                        <td>
+                                            {!! Form::open(array('url' => '/model_predicts/'.$model->id,'method' => 'delete')) !!}
+                                            <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                            {!! Form::close() !!}
+                                        </td>
+                                    </tr>
                                 @endforeach
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
+                        {!! $models->render() !!}
                     </div>
-                    {!! $models->render() !!}
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
