@@ -16,41 +16,7 @@ class WeatherController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['getWeather', 'store']]);
-    }
-
-    /**
-     * Display a listing Weather and CountWeather
-     * URL Path : /Weathers
-     * Method : GET
-     */
-    public function index()
-    {
-        $Weather = Weather::paginate(100);
-        return view('weather.index', [
-            'Weathers' => $Weather,
-        ]); //Weather/index.blade.php
-    }
-
-    /**
-     * Store Weather
-     * @param  \Illuminate\Http\WeatherRequest $request
-     * URL Path : /weathers
-     * Method : POST
-     */
-    public function store(WeatherRequest $request)
-    {
-        $Weather = new Weather();
-        $Weather->create($request->all()); //$fillable
-        WeatherController::predict($request->SerialNumber);
-    }
-
-    public function show($SerialNumber = null)
-    {
-        $serialnumber = Weather::where('SerialNumber', '=', $SerialNumber)->get()->last();
-        return view('weather.show', [
-            'serialnumbers' => $serialnumber
-        ]); // Weather/show.blade.php
+        $this->middleware('auth');
     }
 
     public static function predict($SerialNumber)
@@ -163,7 +129,7 @@ class WeatherController extends Controller
         $pressureWeather = DB::select('SELECT pressure, created_at AS timeweather FROM weather');
         $lightWeather = DB::select('SELECT light, created_at AS timeweather FROM weather');
         $rainWeather = DB::select('SELECT rain, created_at AS timeweather FROM weather');
-        return view('weather.overview', [
+        return view('weather.report', [
             'countW' => $countW,
             'tempWeathers' => $tempWeather,
             'humidityWeathers' => $humidityWeather,
