@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DooFon</title>
     <!-- Fonts -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
     <!-- Styles -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/4.0.7/sweetalert2.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/1.6.6/lity.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.2.2/lity.min.css"/>
+
     <link rel="stylesheet" href="{{ asset('css/color.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}"/>
     {{--<link rel="stylesheet" href="{{ asset('css/app.css') }}"  /> --}}
@@ -50,24 +51,10 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/devices/') }}"><i class="fa fa-mobile"></i> รายการอุปกรณ์IoT</a></li>
                     <li><a href="{{ url('/map') }}"><i class="fa fa-map-marker"></i> แผนที่</a></li>
+                    <li><a href="{{ url('/devices/') }}"><i class="fa fa-mobile"></i> รายการอุปกรณ์IoT</a></li>
                     <li><a href="{{ url('/model_predicts') }}"><i class="fa fa-database"></i> โมเดลพยากรณ์</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">
-                            <span class="caret"></span> สภาพอากาศ
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('/report/weather/overview') }}">Overview</a></li>
-                            <li class="divider"></li>
-                            <li><a href="{{ url('/report/weather/overview#Temperature') }}">Temperature</a></li>
-                            <li><a href="{{ url('/report/weather/overview#Humidity') }}">Humidity</a></li>
-                            <li><a href="{{ url('/report/weather/overview#Dewpoint') }}">Dewpoint</a></li>
-                            <li><a href="{{ url('/report/weather/overview#Pressure') }}">Pressure</a></li>
-                            <li><a href="{{ url('/report/weather/overview#Light') }}">Light</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="{{ url('/report') }}"><i class="fa fa-cloud"></i> รายงานสภาพอากาศ</a></li>
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
@@ -78,9 +65,6 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            {{--
-                            <li><a href="{{ url('/profiles/'.Auth::user()->id.'/edit/') }}"><i class="fa fa-btn fa-user"></i>แก้ไขข้อมูลส่วนตัว</a></li>
-                            --}}
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>ออกจากระบบ</a></li>
                         </ul>
                     </li>
@@ -94,7 +78,7 @@
 <!-- JavaScripts -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/sweetalert2/4.0.7/sweetalert2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lity/1.6.6/lity.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.2.2/lity.min.js"></script>
 {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 
 @yield('footer')
