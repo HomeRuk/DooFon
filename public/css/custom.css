@@ -30,3 +30,12 @@ body { height: 100%; margin: 0px; padding: 0px }
     margin: 0;
     padding: 0px;
 }
+
+.title {
+    color: #B0BEC5;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 72px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
