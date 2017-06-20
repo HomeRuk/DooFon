@@ -80,8 +80,6 @@
                                             <a class="btn btn-block" href="{{ url('/password/reset') }}">Forgot Your
                                                 Password?</a>
                                         </div>
-                                        <a class="btn btn-block" href="{{ url('/password/reset') }}"><h4>Forgot
-                                                YourPassword?</h4></a>
                                     </div>
                                 </div>
                             </form>
@@ -90,5 +88,6 @@
                 </div>
             </div>
         </div>
+    </div>
 
 @endsection
