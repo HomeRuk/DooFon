@@ -31,22 +31,20 @@ class DeviceRequest extends Request {
     public function rules() {
         return [
             'SerialNumber' => 'required|size:10|unique:device',
-<<<<<<< HEAD
+            'threshold' => 'required|integer|min:0|max:100',
+            //'users_id' => 'required|integer',
             //'latitude' => 'required|numeric',
             //'longitude' => 'required|numeric',
-            //'threshold' => 'required|integer|min:0|max:100',
-=======
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'threshold' => 'required|integer|min:0|max:100',
->>>>>>> master
-            //'mode' => 'required|integer|min:1|max:2',
         ];
     }
 
     public function messages() {
         return [
-            //'SerialNumber.required' => 'กรุณากรอกรหัสอุปกรณ์',
+            'SerialNumber.required' => 'กรุณากรอกรหัสอุปกรณ์',
+            'SerialNumber.size' => 'กรุณากรอกรหัสอุปกรณ์10ตัวอักษร',
+            'SerialNumber.unique' => 'กรุณากรอกรหัสอุปกรณ์นี้มีอยู่แล้ว',
+            'threshold.required' => 'กรุณาตั้งค่าเปอร์เซนพยากรณ์ฝนคก',
+            'threshold.integer' => 'กรุณาตั้งค่าเปอร์เซนพยากรณ์ฝนคกเป็นตัวเลข',
         ];
     }
 

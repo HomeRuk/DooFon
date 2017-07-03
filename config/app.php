@@ -159,6 +159,7 @@ return [
         niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
         Cornford\Googlmapper\MapperServiceProvider::class,
         Jcf\Geocode\GeocodeServiceProvider::class,
+        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -219,6 +220,7 @@ return [
         'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
         'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,
         'Geocode' => Jcf\Geocode\Facades\Geocode::class,
+        'Alert' => UxWeb\SweetAlert\SweetAlert::class,
 
     ],
 

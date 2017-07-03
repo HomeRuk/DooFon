@@ -13,7 +13,9 @@ return [
     |
     */
 
-    'previous' => '&laquo; Previous',
-    'next'     => 'Next &raquo;',
+    //'previous' => '&laquo; Previous',
+    //'next'     => 'Next &raquo;',
+    'previous' => '&laquo; ก่อนหน้า',
+    'next'     => 'ถัดไป &raquo;',
 
 ];

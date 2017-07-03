@@ -20,7 +20,7 @@
                     <div align="center" style="margin-top: 20%;">
                         <!-- Branding Image -->
                         <a href="{{ url('/') }}">
-                            <img src="{{ asset('/images/logo.png') }}" class="img-responsive" style="max-width: 140px"/>
+                            <img src="{{ asset('/images/logo.png') }}" class="img-responsive" style="max-width: 130px"/>
                         </a>
                     </div>
                     <div style="text-align: center;">
@@ -31,7 +31,7 @@
                     </div>
                     <div class="login-panel panel panel-default">
                         <div class="panel-heading">
-                            <div style="color:#808080; text-align: center;"><h2>Sign in</h2></div>
+                            <div style="color:#808080; text-align: center;"><h2>ลงชื่อเข้าใช้</h2></div>
                         </div>
                         <div class="panel-body">
                             <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
@@ -74,11 +74,10 @@
                                         <div class="col-md-12">
                                             <!-- BUTTON SUBMIT Sign in-->
                                             <button type="submit" class="btn btn-lg btn-success btn-block ">
-                                                <i class="fa fa-btn fa-sign-in"></i>Sign in
+                                                <i class="fa fa-btn fa-sign-in"></i>ลงชื่อเข้าใช้
                                             </button>
                                             <!-- Link Forgot Password -->
-                                            <a class="btn btn-block" href="{{ url('/password/reset') }}">Forgot Your
-                                                Password?</a>
+                                            <a class="btn btn-block" href="{{ url('/password/reset') }}">ลืมรหัสผ่านหรือไม่?</a>
                                         </div>
                                     </div>
                                 </div>

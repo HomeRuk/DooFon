@@ -16,13 +16,14 @@ class Weather extends Model
         'rain',
         'PredictPercent',
         'TrainStatus',
+        'devices_id',
         'model_id',
         'SerialNumber',
     ];
 
     public function device()
     {
-        return $this->belongsTo('App\Device', 'SerialNumber');
+        return $this->belongsTo('App\Device', 'id');
     }
 
     public function modelpredict()

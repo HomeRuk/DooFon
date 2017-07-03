@@ -14,7 +14,9 @@ return [
     */
 
     //'failed' => 'These credentials do not match our records.',
-    'failed' => 'Invalid Username or Password',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    //'failed' => 'Invalid Username or Password',
+    //'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed' => 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
+    'throttle' => 'ยายามเข้าสู่ระบบมากเกินไป โปรดลองอีกครั้งใน :seconds วินาที',
 
 ];

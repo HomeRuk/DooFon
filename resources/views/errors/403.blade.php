@@ -38,7 +38,7 @@
             <div class="content">
                 <div class="title">Error 403<br>คุณไม่มีสิทธ์ในการเข้าหน้านี้</div>
                 <h2><a href="{{ url('/') }}">หน้าหลัก</a></h2>
-                <h2><a href="{{ url('/admin/logout') }}">ออกจากระบบ</a></h2>
+                <h2><a href="{{ url('/logout') }}">ออกจากระบบ</a></h2>
             </div>
         </div>
     </body>
