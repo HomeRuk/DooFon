@@ -36,8 +36,8 @@ class DeviceController extends Controller
      */
     public function create()
     {
-        return view('admin.device.create');
-        // Device/create.blade.php
+       /* return view('admin.device.create');
+        // Device/create.blade.php*/
     }
 
     /**
@@ -62,13 +62,13 @@ class DeviceController extends Controller
 
     public function edit($id)
     {
-        $device = Device::findOrFail($id);
+      /*  $device = Device::findOrFail($id);
         if (empty($device)) {
             abort(404);
         }
         return view('admin.device.edit', [
             'device' => $device,
-        ]);
+        ]);*/
     }
 
     public function update(Request $request, $id)

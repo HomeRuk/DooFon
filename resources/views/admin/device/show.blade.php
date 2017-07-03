@@ -83,7 +83,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <button class="btn btn-blue btn-block"
-                                                    href="{{ url('/admin/map/full?SerialNumber='.$device->SerialNumber.'&latitude='.$device->latitude.'&longitude='.$device->longitude)}}"
+                                                    href="{{ ($device->weather->count() > 0) ? url('/admin/map/full?SerialNumber='.$device->SerialNumber.'&latitude='.$device->latitude.'&longitude='.$device->longitude.'&rain='.$device->weather->last()->rain) : url('/admin/map/full?SerialNumber='.$device->SerialNumber.'&latitude='.$device->latitude.'&longitude='.$device->longitude)}}"
                                                     data-lity>
                                                 <span class="fa fa-globe"></span> ตำแหน่งบนแผนที่
                                             </button>
@@ -100,18 +100,17 @@
                                     <hr>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <a class="btn btn-sm btn-warning btn-block"
-                                               href="{{ url('/admin/devices/'.$device->id.'/edit') }}">
+                                            <a class="btn btn-sm btn-warning btn-block edit-device" href="#">
                                                 <span class="fa fa-pencil"></span> แก้ไข
                                             </a>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        {!! Form::open(array('url' => '/admin/devices/'.$device->id,'method' => 'delete','style'=>'display:inline','id' => 'delete')) !!}
-                                        <button class="btn btn-sm btn-danger btn-block">
-                                            <span class="fa fa-trash"></span> ลบ
-                                        </button>
-                                        {!! Form::close() !!}
+                                        <div class="form-group">
+                                            <a class="btn btn-sm btn-danger btn-block del-device" href="#" >
+                                                <span class="fa fa-trash"></span> ลบ
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -194,6 +193,79 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal form to update a device -->
+    <div id="editDevice" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">แก้ไขรายการอุปกรณ์IoT</h3>
+                </div>
+                <div class="modal-body">
+                    {!! Form::model($device , array('url' => '/admin/devices/'.$device->id,'method' => 'PATCH','id' => 'update')) !!}
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {{ Form::label('SerialNumber', 'SerialNumber') }}
+                            {{ Form::text('SerialNumber',null,['class' => 'form-control input-lg','placeholder'=>'Ex. AsZsXsweRq','pattern'=>'[0-9a-zA-Z]{10}','title'=>'กรุณากรอกตัวเลขหรือตัวอักษรภาษาอังกฤษรวม 10 หลัก','required','disabled']) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {{ Form::label('latitude', 'latitude')  }}
+                            {{ Form::text('latitude',null,['class' => 'form-control input-lg','placeholder'=>'Ex. 101.123456','required']) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {{ Form::label('longitude', 'longitude')  }}
+                            {{ Form::text('longitude',null,['class' => 'form-control input-lg','placeholder'=>'Ex. 101.123456','required']) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {{ Form::label('threshold', 'threshold')  }}
+                            {{ Form::number('threshold',null,['class' => 'form-control input-lg','placeholder'=>'Ex. 70','required','min'=>'1','max'=>'100']) }}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {{ Form::submit('ปรับปรุง',['class' => 'btn btn-lg btn-primary btn-block','id' => 'update']) }}
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal form to delete a device -->
+    <div id="delDevice" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">คุณต้องการลบรายการอุปกรณ์IoT นี้ใช้หรือไม่ ?</h3>
+                </div>
+                <div class="modal-body">
+                    <label>SerialNumber : </label>
+                    <input type="text" class="form-control input-lg" disabled value="{{ $device->SerialNumber }}">
+                </div>
+                <div class="modal-footer">
+                    {!! Form::open(array('url' => '/admin/devices/'.$device->id,'method' => 'delete','style'=>'display:inline','id' => 'delete')) !!}
+                    <button class="btn btn-md btn-danger btn-block">
+                        <span class="fa fa-trash"></span> ยืนยันการลบ
+                    </button>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('footer')
     <script>
@@ -201,4 +273,7 @@
             return confirm("คุณต้องการลบรายการอุปกรณ์IoT นี้ใช้หรือไม่");
         });
     </script>
+
+    <!-- jQuery operations -->
+    <script type="text/javascript" src="{{ asset('js/jQueryDevice.js') }}"></script>
 @endsection

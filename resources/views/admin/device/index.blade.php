@@ -13,7 +13,7 @@
                         <div class="col-md-9">
                             <br>
                             <div class="form-group">
-                                <a href="{{ url('/admin/devices/create') }}" class="btn btn-blue">
+                                <a href="#" class="btn btn-blue add-device">
                                     <span class="fa fa-plus-circle"></span> สร้างรายการอุปกรณ์IoT
                                 </a>
                             </div>
@@ -24,11 +24,15 @@
                 <hr/>
                 <div class="row">
                     <div class="col-md-2">
-                        <img src="{{ asset('/images/rain64.png') }}" style="max-height:24px; max-width:100%"> : <b>ฝนตกภายในพื้นอุปกรณ์IoT</b>
+                        <div class="form-group">
+                            <img src="{{ asset('/images/rain64.png') }}" style="max-height:24px; max-width:100%"> : <b>ฝนตกภายในพื้นอุปกรณ์IoT</b>
+                        </div>
                     </div>
                     <div class="col-md-3">
-                        <button class="btn btn-xs btn-danger"><span class="fa fa-cloud"></span></button>
-                        : <b>มีโอกาสฝนตกภายในพื้นอุปกรณ์IoT</b>
+                        <div class="form-group">
+                            <button class="btn btn-xs btn-danger"><span class="fa fa-cloud"></span></button>
+                            : <b>มีโอกาสฝนตกภายในพื้นอุปกรณ์IoT</b>
+                        </div>
                     </div>
                     <div class="col-md-5">
                     </div>
@@ -46,6 +50,15 @@
                     </div>
                 </div>
                 <br/>
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 @if($devices->count() > 0)
                     <div class="row">
                         <div class="col-md-12">
@@ -104,7 +117,7 @@
                                                 <div class="col-md-2">
                                                     <div class="form-group">
                                                         <button class="btn btn-blue btn-block"
-                                                                href="{{ url('/admin/map/full?SerialNumber='.$device->SerialNumber.'&latitude='.$device->latitude.'&longitude='.$device->longitude)}}"
+                                                                href="{{ ($device->weather->count() > 0) ? url('/admin/map/full?SerialNumber='.$device->SerialNumber.'&latitude='.$device->latitude.'&longitude='.$device->longitude.'&rain='.$device->weather->last()->rain) : url('/admin/map/full?SerialNumber='.$device->SerialNumber.'&latitude='.$device->latitude.'&longitude='.$device->longitude)}}"
                                                                 data-lity>
                                                             <span class="fa fa-globe"></span> ตำแหน่งบนแผนที่
                                                         </button>
@@ -127,4 +140,62 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal form to Create a device -->
+    <div id="addDevice" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">เพิ่มอุปกรณ์IoT</h3>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(array('url' => '/admin/devices' ,'method' => 'POST' ,'id' => 'save')) !!}
+                    <div class="col-md-11">
+                        <div class="form-group">
+                            {{ Form::label('SerialNumber', 'SerialNumber') }}
+                            {{ Form::text('SerialNumber',null,['class' => 'form-control input-lg','placeholder'=>'Ex. AsZsXsweRq','pattern'=>'[0-9a-zA-Z]{10}','title'=>'กรุณากรอกตัวเลขหรือตัวอักษรภาษาอังกฤษรวม 10 หลัก','required autofocus']) }}
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <h2><i class="fa fa-refresh" onclick="makeSerialNumber()"></i></h2>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {{ Form::label('threshold', 'threshold')  }}
+                            {{ Form::number('threshold',null,['class' => 'form-control input-lg','placeholder'=>'Ex. 70','required','min'=>'1','max'=>'100']) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {{ Form::submit('สร้าง',['class' => 'btn btn-lg btn-primary btn-block']) }}
+                        </div>
+                    </div>
+                </div>
+                {!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('footer')
+    <!-- jQuery operations -->
+    <script type="text/javascript" src="{{ asset('js/jQueryDevice.js') }}"></script>
+
+    <script>
+        $(document).ready(makeSerialNumber());
+        function makeSerialNumber() {
+            var SerialNumber = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            for (var i = 0; i < 10; i++) {
+                SerialNumber += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+            //document.getElementById("SerialNumber").value =  (Math.random()+1).toString(36).substr(2, 10);
+            document.getElementById("SerialNumber").value = SerialNumber;
+            return false;
+        }
+    </script>
 @endsection

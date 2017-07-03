@@ -30,13 +30,13 @@ class MapController extends Controller
                         Mapper::informationWindow($device->latitude, $device->longitude, $content . $response->formattedAddress(), [
                             'open' => true,
                             'eventClick' => 'window.location.href = \'' . url('/admin/devices/' . $device->id) . '\'',
-                            'icon' => url('/images/rain64.png')
+                            'icon' => asset('/images/rain64.png')
                         ]);
                     } else {
                         Mapper::informationWindow($device->latitude, $device->longitude, $content . $response->formattedAddress(), [
                             'open' => true,
                             'eventClick' => 'window.location.href = \'' . url('/admin/devices/' . $device->id) . '\'',
-                            'icon' => url('/images/cloud64.png')
+                            'icon' => asset('/images/cloud64.png')
                         ]);
                     }
                 } else {
@@ -54,18 +54,36 @@ class MapController extends Controller
         $SerialNumber = $request->get('SerialNumber');
         $latitude = $request->get('latitude');
         $longitude = $request->get('longitude');
-        if (empty($SerialNumber) || empty($latitude) || empty($longitude)) {
+        $rain = $request->get('rain');
+        if (is_null($SerialNumber) || is_null($latitude) || is_null($longitude)) {
             return view('errors.404-2');
         } else {
             try {
                 $response = Geocode::make()->latLng($latitude, $longitude);
                 $content = '<b>' . $SerialNumber . '</b><br/>';
+
                 if ($response) {
-                    Mapper::map($latitude, $longitude, ['zoom' => '16', 'marker' => false, 'center' => true]);
-                    Mapper::informationWindow($latitude, $longitude, $content . $response->formattedAddress(), ['open' => true, 'icon' => url('/images/cloud64.png')]);
+                    if (is_null($rain)) {
+                        Mapper::map($latitude, $longitude, ['zoom' => '16', 'marker' => false, 'center' => true]);
+                        Mapper::informationWindow($latitude, $longitude, $content . $response->formattedAddress(), ['open' => true, 'icon' => asset('/images/noneCloud64.png')]);
+                    }else if ($rain == 1) {
+                        Mapper::map($latitude, $longitude, ['zoom' => '16', 'marker' => false, 'center' => true]);
+                        Mapper::informationWindow($latitude, $longitude, $content . $response->formattedAddress(), ['open' => true, 'icon' => asset('/images/rain64.png')]);
+                    } else {
+                        Mapper::map($latitude, $longitude, ['zoom' => '16', 'marker' => false, 'center' => true]);
+                        Mapper::informationWindow($latitude, $longitude, $content . $response->formattedAddress(), ['open' => true, 'icon' => asset('/images/cloud64.png')]);
+                    }
                 } else {
-                    Mapper::map($latitude, $longitude, ['zoom' => '16', 'marker' => false, 'center' => true]);
-                    Mapper::informationWindow($latitude, $longitude, $content, ['open' => true, 'icon' => url('/images/rain64.png')]);
+                    if (is_null($rain)) {
+                        Mapper::map($latitude, $longitude, ['zoom' => '16', 'marker' => false, 'center' => true]);
+                        Mapper::informationWindow($latitude, $longitude, $content, ['open' => true, 'icon' => asset('/images/noneCloud64.png')]);
+                    }else if ($rain == 1) {
+                        Mapper::map($latitude, $longitude, ['zoom' => '16', 'marker' => false, 'center' => true]);
+                        Mapper::informationWindow($latitude, $longitude, $content, ['open' => true, 'icon' => asset('/images/rain64.png')]);
+                    } else {
+                        Mapper::map($latitude, $longitude, ['zoom' => '16', 'marker' => false, 'center' => true]);
+                        Mapper::informationWindow($latitude, $longitude, $content, ['open' => true, 'icon' => asset('/images/cloud64.png')]);
+                    }
                 }
             } catch (\Exception $e) {
                 return view('errors.404-2');
