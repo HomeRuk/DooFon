@@ -13,7 +13,7 @@
                         <div class="col-md-9">
                             <br>
                             <div class="form-group">
-                                <a href="{{ url('/user/devices/create') }}" class="btn btn-blue">
+                                <a href="#" class="btn btn-blue add-device">
                                     <span class="fa fa-plus-circle"></span> เพิ่มอุปกรณ์IoT
                                 </a>
                             </div>
@@ -46,6 +46,15 @@
                     </div>
                 </div>
                 <br/>
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 @if($devices->count() > 0)
                     <div class="row">
                         <div class="col-md-12">
@@ -104,7 +113,7 @@
                                                 <div class="col-md-2">
                                                     <div class="form-group">
                                                         <button class="btn btn-blue btn-block"
-                                                                href="{{ url('/user/map/full?SerialNumber='.$device->SerialNumber.'&latitude='.$device->latitude.'&longitude='.$device->longitude)}}"
+                                                                href="{{ ($device->weather->count() > 0) ? url('/user/map/full?SerialNumber='.$device->SerialNumber.'&latitude='.$device->latitude.'&longitude='.$device->longitude.'&rain='.$device->weather->last()->rain) : url('/user/map/full?SerialNumber='.$device->SerialNumber.'&latitude='.$device->latitude.'&longitude='.$device->longitude)}}"
                                                                 data-lity>
                                                             <span class="fa fa-globe"></span> ตำแหน่งบนแผนที่
                                                         </button>
@@ -127,4 +136,40 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal form to add a device -->
+    <div id="addDevice" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">เพิ่มอุปกรณ์IoT</h3>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(array('url' => '/user/devices','method' => 'POST' ,'id' => 'save')) !!}
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {{ Form::label('SerialNumber', 'SerialNumber') }}
+                            {{ Form::text('SerialNumber',null,['class' => 'form-control input-lg','placeholder'=>'Ex. AsZsXsweRq','pattern'=>'[0-9a-zA-Z]{10}','title'=>'กรุณากรอกตัวเลขหรือตัวอักษรภาษาอังกฤษรวม 10 หลัก','required autofocus']) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {{ Form::submit('เพิ่ม',['class' => 'btn btn-md btn-blue btn-block']) }}
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('footer')
+    <!-- jQuery operations -->
+    <script type="text/javascript" src="{{ asset('js/jQueryDevice.js') }}"></script>
 @endsection

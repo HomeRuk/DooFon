@@ -40,7 +40,7 @@ class DeviceController extends Controller
      */
     public function create()
     {
-        return view('user.device.create');
+        //return view('user.device.create');
         // /user/device/create.blade.php
     }
 
@@ -60,22 +60,22 @@ class DeviceController extends Controller
             $device = Device::where('SerialNumber', '=', $SerialNumber)->first();
             $user->device()->save($device);
         } catch (\Exception $e) {
-            Alert::error('เพิ่มรายการอุปกรณ์IoT ผิดพลาด !', 'ผลการทำงาน')->persistent('ปิด')->autoclose(3500);
+            Alert::error('บันทึกรายการอุปกรณ์IoTผิดพลาด <br/> กรุณาตรวจสอบข้อมูล!', 'ผลการทำงาน')->persistent('ปิด')->autoclose(3500);
             return redirect()->action('User\DeviceController@index');
         }
-        Alert::success('เพิ่มรายการอุปกรณ์IoT สำเร็จ!', 'ผลการทำงาน')->persistent('ปิด')->autoclose(3500);
+        Alert::success('บันทึกรายการอุปกรณ์IoT สำเร็จ!', 'ผลการทำงาน')->persistent('ปิด')->autoclose(3500);
         return redirect()->action('User\DeviceController@index');
     }
 
     public function edit($device_id)
     {
-        $device = User::findOrFail(Auth::user()->id)->device()->findOrFail($device_id);
+      /*  $device = User::findOrFail(Auth::user()->id)->device()->findOrFail($device_id);
         if (empty($device)) {
             abort(404);
         }
         return view('user.device.edit', [
             'device' => $device,
-        ]);
+        ]);*/
     }
 
     public function update(Request $request, $device_id)
