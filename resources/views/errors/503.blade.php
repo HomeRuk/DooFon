@@ -1,19 +1,15 @@
-<!DOCTYPE html>
 <html>
     <head>
-        <title>Be right back.</title>
-
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
 
         <style>
-            html, body {
-                height: 100%;
-            }
-
             body {
                 margin: 0;
                 padding: 0;
                 width: 100%;
+                height: 100%;
                 color: #B0BEC5;
                 display: table;
                 font-weight: 100;
@@ -40,7 +36,8 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Be right back.</div>
+                <div class="title">Error 503 <br> Server หยุดให้บริการ</div>
+                <div class="content">กรุณารอสักครู่ ค่อยกับมาใช้บริการ หรือ แจ้งไปที่ผู้ดูแลระบบ</div>
             </div>
         </div>
     </body>

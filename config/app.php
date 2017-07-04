@@ -150,10 +150,16 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        /*
+           * Custom Add Providers...
+           */
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Oblagio\Highcharts\Provider::class,
         niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
+        Cornford\Googlmapper\MapperServiceProvider::class,
+        Jcf\Geocode\GeocodeServiceProvider::class,
+        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -212,6 +218,9 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Chart' => Oblagio\Highcharts\Facade::class,
         'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
+        'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,
+        'Geocode' => Jcf\Geocode\Facades\Geocode::class,
+        'Alert' => UxWeb\SweetAlert\SweetAlert::class,
 
     ],
 

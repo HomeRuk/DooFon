@@ -1,0 +1,74 @@
+div .box-0 {
+    padding: 0px;
+    border-radius:3px;
+    border: 1px solid #4fc3f7;
+    border-bottom: 0px;
+    margin: 0;
+}
+
+div .box{
+    padding: 10px;
+    margin: 0;
+}
+
+div .box .img-circle{
+    max-width: 80px;
+}
+
+.navbar-map {
+    margin-bottom: 0px;
+}
+
+html { height: 100% }
+body { height: 100%; margin: 0px; padding: 0px }
+#container { width: 100%; height: 100% }
+#nav { position: absolute;  }
+#map { width: 100%; height: 100% }
+
+.lineblue {
+    border-top: 1px solid #4fc3f7;
+    margin: 0;
+    padding: 0px;
+}
+
+.title {
+    color: #B0BEC5;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 72px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.strike {
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-bottom: 10px;
+}
+
+.strike > span {
+    position: relative;
+    display: inline-block;
+}
+
+.strike > span:before,
+.strike > span:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 9999px;
+    height: 1px;
+    background: red;
+}
+
+.strike > span:before {
+    right: 100%;
+    margin-right: 15px;
+}
+
+.strike > span:after {
+    left: 100%;
+    margin-left: 15px;
+}

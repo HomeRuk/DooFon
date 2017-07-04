@@ -6,13 +6,19 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'username',
+        'password',
+        'status',
+        'token_fcmweb'
     ];
 
     /**
@@ -23,4 +29,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * The device that belong to the user.
+     */
+    public function device()
+    {
+        return $this->belongsToMany('App\Device', 'device_users', 'users_id', 'device_id')->withTimestamps();
+    }
 }

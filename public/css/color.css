@@ -24,18 +24,19 @@
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   color: #fefefe;
+  background-color: #3366ff;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color: #fefefe;
-  background-color: #03a9f4;
+  background-color: #3366ff;
 }
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
   color: #fefefe;
-  background-color: #03a9f4;
+  background-color: #3366ff;
 }
 .navbar-default .navbar-toggle {
   border-color: #03a9f4;
@@ -78,7 +79,65 @@
     border-color: #4fc3f7;
 }
 .panel-custom-horrible-blue > .panel-heading {
-    background: #4fc3f7; 
+    background: #3399ff;
     color: #ffffff;
-    border-color: #4fc3f7;
+    border-color: #33aaff;
 }
+
+.btn-blue {
+  background: #3399ff;
+  color: #fff;
+}
+
+.btn-blue:focus,
+.btn-blue.focus {
+  color: #fff;
+  background-color: #3377ff;
+}
+.btn-blue:hover {
+  color: #fff;
+  background-color: #3377ff;
+  border-color: #3377ff;
+}
+.btn-blue:active,
+.btn-blue.active,
+.open > .dropdown-toggle.btn-blue {
+  color: #fff;
+  background-color: #3399ff;
+  border-color: #3377ff;
+}
+.btn-blue:active:hover,
+.btn-blue.active:hover,
+.open > .dropdown-toggle.btn-blue:hover,
+.btn-blue:active:focus,
+.btn-blue.active:focus,
+.open > .dropdown-toggle.btn-blue:focus,
+.btn-blue:active.focus,
+.btn-blue.active.focus,
+.open > .dropdown-toggle.btn-blue.focus {
+  color: #fff;
+  background-color: #3377ff;
+  border-color: #3377ff;
+}
+.btn-blue:active,
+.btn-blue.active,
+.open > .dropdown-toggle.btn-blue {
+  background-image: none;
+}
+.btn-blue.disabled:hover,
+.btn-blue[disabled]:hover,
+fieldset[disabled] .btn-blue:hover,
+.btn-blue.disabled:focus,
+.btn-blue[disabled]:focus,
+fieldset[disabled] .btn-blue:focus,
+.btn-blue.disabled.focus,
+.btn-blue[disabled].focus,
+fieldset[disabled] .btn-blue.focus {
+  background-color: #33ccff;
+  border-color: #33ccff;
+}
+.btn-blue .badge {
+  color: #fff;
+  background-color: #33ccff;
+}
+

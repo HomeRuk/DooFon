@@ -6,21 +6,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class Weather extends Model
 {
-    protected  $table = 'weather';
-    protected  $fillable = [
+    protected $table = 'weather';
+    protected $fillable = [
         'temp',
         'humidity',
         'dewpoint',
         'pressure',
         'light',
         'rain',
-        'SerialNumber',
         'PredictPercent',
+        'TrainStatus',
+        'devices_id',
         'model_id',
-        'PredictMode'
+        'SerialNumber',
     ];
-    
-    public function modelpredict() {
-        return $this->belongsTo(Model_Predict::class, 'model_id');
+
+    public function device()
+    {
+        return $this->belongsTo('App\Device', 'id');
     }
+
+    public function modelpredict()
+    {
+        return $this->belongsTo('App\Model_Predict', 'model_id');
+    }
+
 }

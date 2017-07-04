@@ -29,6 +29,7 @@ class WeatherRequest extends Request {
             'light' => 'required|integer|min:0|max:1023',
             'rain' => 'required|in:0,1',
             'SerialNumber' => 'required|size:10',
+            //'device_id' => 'required',
         ];
     }
 

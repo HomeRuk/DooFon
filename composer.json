@@ -11,7 +11,10 @@
         "barryvdh/laravel-debugbar": "^2.3",
         "muhamadrezaar/highcharts": "^1.0",
         "intervention/image": "^2.3",
-        "niklasravnsborg/laravel-pdf": "^1.1"
+        "niklasravnsborg/laravel-pdf": "^1.1",
+        "uxweb/sweet-alert": "~1.4",
+        "cornford/googlmapper": "2.*",
+        "jcf/geocode": "1.2.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -1,51 +1,63 @@
 <?php
 
 /*
-  |--------------------------------------------------------------------------
-  | Application Routes
-  |--------------------------------------------------------------------------
-  |
-  | Here is where you can register all of the routes for an application.
-  | It's a breeze. Simply tell Laravel the URIs it should respond to
-  | and give it the controller to call when that URI is requested.
-  |
- */
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+*/
 
 //Main
-Route::get('/', 'HomeController@index');
+Route::get('/', 'MainController@index');
 // Authentication
 Route::auth();
 // Registration Routes...
-Route::get('register', 'Auth\RegisterController@showRegistrationForm');
-Route::post('register', 'Auth\RegisterController@register');
-//API 
-Route::get('/weather/{SerialNumber}', 'WeatherController@show');
-Route::get('/device/{SerialNumber}', 'DeviceController@show');
-// Web page
-Route::resource('/weather', 'WeatherController');
-Route::resource('/device', 'DeviceController');
-Route::get('/devices/insert', 'DeviceController@insert');
-Route::get('/devices/overview', 'DeviceController@overview');
-Route::get('/weathers/overview', 'WeatherController@chartReport');
-Route::get('/model_predicts/overview', 'Model_PredictController@overview');
-// Update Device
-Route::post('/device/update/location', 'DeviceController@updateLocation');
-Route::post('/device/update/threshold', 'DeviceController@updateThreshold');
-Route::post('/device/update/FCMtoken', 'DeviceController@updateFCMtoken');
-Route::post('/device/update/mode', 'DeviceController@updateMode');
-// Chartreport Weather
-Route::resource('/model_predict', 'Model_PredictController');
-// Download Training model & Data 
-Route::get('/model_predict/download/arff/{model_predict}', 'Model_PredictController@downloadArff');
-Route::get('/model_predict/download/model/{model_predict}', 'Model_PredictController@downloadModel');
+Route::get('/admin/register', 'Auth\RegisterController@showRegistrationForm');
+Route::post('/admin/register', 'Auth\RegisterController@register');
+
+// API
+Route::group(['middleware' => ['api']], function () {
+// API Show Value
+    Route::get('/api/weather/{SerialNumber?}', 'Api\WeatherController@getWeather');
+    Route::get('/api/device/{SerialNumber?}', 'Api\DeviceController@getDevice');
+// API POST Data from IoT Devices
+    Route::post('/api/Weather', 'Api\WeatherController@store');
+// API Update Device
+    Route::post('/api/device/update/location', 'Api\DeviceController@updateLocation');
+    Route::post('/api/device/update/threshold', 'Api\DeviceController@updateThreshold');
+    Route::post('/api/device/update/FCMtoken', 'Api\DeviceController@updateFCMtoken');
+});
+
+// Web App for User
+Route::group(['middleware' => ['admin']], function () {
+    Route::resource('/admin/devices', 'Admin\DeviceController');
+    Route::resource('/admin/model_predicts', 'Admin\Model_PredictController');
+    Route::get('/admin/map', 'Admin\MapController@index');
+    Route::get('/admin/map/full', 'Admin\MapController@mapFull');
+    Route::get('/admin/report', 'Admin\WeatherController@chartReport');
+// Download Training model & Data
+    Route::get('/admin/model_predict/download/arff/{model_predict}', 'Admin\Model_PredictController@downloadArff');
+    Route::get('/admin/model_predict/download/model/{model_predict}', 'Admin\Model_PredictController@downloadModel');
 // Download Report Training model
-Route::get('/model_predict/download/txt/{model_predict}', 'Model_PredictController@downloadTXT');
-Route::get('/model_predict/download/pdf/{model_predict}', 'Model_PredictController@downloadPDF');
-Route::get('/model_predict/stream/pdf/{model_predict}', 'Model_PredictController@streamPDF');
-// TEST Send Notio and Testing Model
-Route::get('/send', function() {
+    Route::get('/admin/model_predict/download/txt/{model_predict}', 'Admin\Model_PredictController@downloadTXT');
+    Route::get('/admin/model_predict/download/pdf/{model_predict}', 'Admin\Model_PredictController@downloadPDF');
+    Route::get('/admin/model_predict/stream/pdf/{model_predict}', 'Admin\Model_PredictController@streamPDF');
+});
+
+// Web App for User
+Route::group(['middleware' => ['user']], function () {
+    Route::resource('/user/devices', 'User\DeviceController');
+    Route::get('/user/map', 'User\MapController@index');
+    Route::get('/user/map/full', 'User\MapController@mapFull');
+    Route::get('/user/report', 'User\WeatherController@chartReport');
+});
+
+Route::get('/user/user','User\UserController@index');
+/*
+// TEST Send Notify and Testing Model
+Route::get('/send', function () {
     return view('PHP_Sentform');
 });
-Route::get('/predict', function() {
+Route::get('/predict', function () {
     return view('predict_model');
 });
+*/
