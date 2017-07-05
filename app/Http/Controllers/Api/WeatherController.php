@@ -102,7 +102,7 @@ class WeatherController extends Controller
         exec($RandomForest, $execOutput);
 
         // Check exec
-        if (sizeof($execOutput) == 0) {
+        if (sizeof($execOutput) === 0) {
             die('Error exec'); // exec error
         }
         // String array to string $outputs
@@ -142,12 +142,12 @@ class WeatherController extends Controller
     {
         $device = Device::where('SerialNumber', '=', $SerialNumber)->first();
         $FCMtoken = $device->FCMtoken;
-        $token_fcmweb = Device::find($devices_id)->user()->get()->last()->token_fcmweb;
+        $FCMTokenweb = Device::find($devices_id)->user()->get()->last()->FCMTokenweb;
 
         // Compare PercentRainCurrent vs SettingThresholdDevice
         if ($outputPrediction >= $device->threshold) {
             DeviceController::alertToDevice($SerialNumber, $outputPrediction, $FCMtoken);
-            UserController::alertToWeb($devices_id, $SerialNumber, $outputPrediction, $token_fcmweb);
+            UserController::alertToWeb($devices_id, $SerialNumber, $outputPrediction, $FCMTokenweb);
         }
     }
 
