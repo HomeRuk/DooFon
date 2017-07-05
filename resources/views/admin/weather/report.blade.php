@@ -639,6 +639,10 @@
             <div class="col-md-10 col-md-offset-1">
                 <span class="fa fa-cloud fa-5x"></span>
                 <span style="font-size:38px; margin-left: 2%">รายงานสภาพอากาศ</span>
+                @if($device)
+                    อุปกรณ์ IoT :
+                    <a href="{{ url('/admin/devices/'.$device->id) }}">{{ $device->SerialNumber }}</a>
+                @endif
             </div>
         </div>
         <hr>
