@@ -16,10 +16,8 @@
                             <div class="col-md-12">
                                 <div class="col-md-1">
                                     <div class="form-group">
-                                        <a href="{{ ($device->weather->count() > 0) ? ($device->weather->last()->rain == 1) ? asset('/images/rain128.png') : asset('/images/cloud128.png') : asset('/images/noneCloud.png') }}" data-lity>
-                                            <img class="img-responsive img-circle"
-                                                 src="{{ ($device->weather->count() > 0) ? ($device->weather->last()->rain == 1) ? asset('/images/rain128.png') : asset('/images/cloud128.png') : asset('/images/noneCloud.png') }}">
-                                        </a>
+                                        <img class="img-responsive img-circle"
+                                             src="{{ ($device->weather->count() > 0) ? ($device->weather->last()->rain == 1) ? asset('/images/rain128.png') : asset('/images/cloud128.png') : asset('/images/noneCloud.png') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -107,7 +105,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <a class="btn btn-sm btn-danger btn-block del-device" href="#" >
+                                            <a class="btn btn-sm btn-danger btn-block del-device" href="#">
                                                 <span class="fa fa-trash"></span> ลบ
                                             </a>
                                         </div>
