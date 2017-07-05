@@ -18,7 +18,7 @@ class User extends Authenticatable
         'username',
         'password',
         'status',
-        'token_fcmweb'
+        'FCMTokenweb'
     ];
 
     /**
