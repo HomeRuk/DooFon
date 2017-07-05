@@ -11,20 +11,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/4.0.7/sweetalert2.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.2.2/lity.min.css"/>
-
     <link rel="stylesheet" href="{{ asset('css/color.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}"/>
-    {{--<link rel="stylesheet" href="{{ asset('css/app.css') }}"  /> --}}
-
-    <style>
-        body {
-            font-family: 'Athiti', sans-serif;
-        }
-
-        .fa-btn {
-            margin-right: 6px;
-        }
-    </style>
     <!-- Jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     @yield('header')
@@ -51,8 +39,16 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/user/map') }}"><i class="fa fa-map-marker"></i> แผนที่</a></li>
-                    <li><a href="{{ url('/user/devices/') }}"><i class="fa fa-mobile"></i> รายการอุปกรณ์IoT</a></li>
+                    @if(Request::url() === url('/user/map/'))
+                        <li class="active"><a href="{{ url('/user/map') }}"><i class="fa fa-btn fa-map-marker"></i>แผนที่</a></li>
+                        <li><a href="{{ url('/user/devices/') }}"><i class="fa fa-btn fa-mobile"></i>รายการอุปกรณ์IoT</a></li>
+                    @elseif(Request::url() === url('/user/devices/'))
+                        <li><a href="{{ url('/user/map') }}"><i class="fa fa-btn fa-map-marker"></i>แผนที่</a></li>
+                        <li class="active"><a href="{{ url('/user/devices/') }}"><i class="fa fa-btn fa-mobile"></i>รายการอุปกรณ์IoT</a></li>
+                    @else
+                        <li><a href="{{ url('/user/map') }}"><i class="fa fa-btn fa-map-marker"></i>แผนที่</a></li>
+                        <li><a href="{{ url('/user/devices/') }}"><i class="fa fa-btn fa-mobile"></i>รายการอุปกรณ์IoT</a></li>
+                    @endif
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
@@ -60,7 +56,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">
                             <i class="fa fa-user fa-fw"></i> ยินดีตอนรับ
-                            @if(Auth::user()->status == 'Admin')
+                            @if(Auth::user()->status === 'Admin')
                                 {{ Auth::user()->name }} (ผู้ดูแล)
                             @else
                                 {{ Auth::user()->name }}
@@ -68,6 +64,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ url('/profiles/'.Auth::user()->id.'/edit/') }}"><i class="fa fa-btn fa-user"></i>แก้ไขข้อมูลส่วนตัว</a></li>
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>ออกจากระบบ</a></li>
                         </ul>
                     </li>
@@ -78,29 +75,18 @@
 </nav>
 
 @yield('content')
+
 <!-- JavaScripts -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/sweetalert2/4.0.7/sweetalert2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.2.2/lity.min.js"></script>
-{{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 
-
-<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
-<script>
-    // Initialize Firebase
-    var config = {
-        apiKey: "AAAAcxxaxpM:APA91bG7-JTAxf_5-jnvCrEJmh1QSHQSbg6B_uSxZFwMSUKDFccAYTlgcdy_vQMRQ2cF2nwqZA5o9d46A9dVFgx9zw2movJhlLa4PUd93TS3OCnx0i2y1B3EOtvMB60bd71VKcQyxkLq",
-        authDomain: "webdoofon.firebaseapp.com",
-        databaseURL: "https://webdoofon.firebaseio.com",
-        projectId: "webdoofon",
-        storageBucket: "webdoofon.appspot.com",
-        messagingSenderId: "494396950163"
-    };
-    firebase.initializeApp(config);
-</script>
-
-@yield('footer')
+<!-- Include fcm notify -->
+@include('includes.fcm')
 <!-- Include this after the sweet alert js file -->
 @include('sweet::alert')
+
+@yield('footer')
+
 </body>
 </html>

@@ -11,17 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="{{ asset('css/color.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}"/>
-    {{--<link rel="stylesheet" href="{{ asset('css/app.css') }}"  /> --}}
 
-    <style>
-        body {
-            font-family: 'Athiti', sans-serif;
-        }
-
-        .fa-btn {
-            margin-right: 6px;
-        }
-    </style>
     <!-- Jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     @yield('header')
@@ -48,8 +38,16 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/user/map') }}"><i class="fa fa-map-marker"></i> แผนที่</a></li>
-                    <li><a href="{{ url('/user/devices/') }}"><i class="fa fa-mobile"></i> รายการอุปกรณ์IoT</a></li>
+                    @if(Request::url() === url('/user/map/'))
+                        <li class="active"><a href="{{ url('/user/map') }}"><i class="fa fa-btn fa-map-marker"></i>แผนที่</a></li>
+                        <li><a href="{{ url('/user/devices/') }}"><i class="fa fa-btn fa-mobile"></i>รายการอุปกรณ์IoT</a></li>
+                    @elseif(Request::url() === url('/user/devices/'))
+                        <li><a href="{{ url('/user/map') }}"><i class="fa fa-btn fa-map-marker"></i>แผนที่</a></li>
+                        <li class="active"><a href="{{ url('/user/devices/') }}"><i class="fa fa-btn fa-mobile"></i>รายการอุปกรณ์IoT</a></li>
+                    @else
+                        <li><a href="{{ url('/user/map') }}"><i class="fa fa-btn fa-map-marker"></i>แผนที่</a></li>
+                        <li><a href="{{ url('/user/devices/') }}"><i class="fa fa-btn fa-mobile"></i>รายการอุปกรณ์IoT</a></li>
+                    @endif
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
@@ -57,7 +55,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">
                             <i class="fa fa-user fa-fw"></i> ยินดีตอนรับ
-                            @if(Auth::user()->status == 'Admin')
+                            @if(Auth::user()->status === 'Admin')
                                 {{ Auth::user()->name }} (ผู้ดูแล)
                             @else
                                 {{ Auth::user()->name }}
@@ -65,9 +63,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            {{--
                             <li><a href="{{ url('/profiles/'.Auth::user()->id.'/edit/') }}"><i class="fa fa-btn fa-user"></i>แก้ไขข้อมูลส่วนตัว</a></li>
-                            --}}
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>ออกจากระบบ</a></li>
                         </ul>
                     </li>
@@ -80,6 +76,9 @@
 @yield('content')
 <!-- JavaScripts -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Include fcm notify -->
+@include('includes.fcm')
 
 @yield('footer')
 </body>
