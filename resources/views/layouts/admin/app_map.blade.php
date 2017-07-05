@@ -48,10 +48,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/admin/map') }}"><i class="fa fa-map-marker"></i> แผนที่</a></li>
-                    <li><a href="{{ url('/admin/devices/') }}"><i class="fa fa-mobile"></i> รายการอุปกรณ์IoT</a></li>
-                    <li><a href="{{ url('/admin/model_predicts') }}"><i class="fa fa-database"></i> โมเดลพยากรณ์</a></li>
-                    <li><a href="{{ url('/admin/report') }}"><i class="fa fa-cloud"></i> รายงานสภาพอากาศ</a></li>
+                  @include('includes.navbarLeft')
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
