@@ -52,7 +52,8 @@ Route::group(['middleware' => ['user']], function () {
     Route::get('/user/map', 'User\MapController@index');
     Route::get('/user/map/full', 'User\MapController@mapFull');
     Route::get('/user/report', 'User\WeatherController@chartReport');
-    Route::resource('/user/profile', 'User\ProfilesController');
+    Route::get('/user/profile', 'User\ProfilesController@index');
+    Route::put('/user/profile', 'User\ProfilesController@update');
 });
 
 /*
