@@ -3,7 +3,7 @@ $(document).on('click', '.add-device', function() {
     $('#addDevice').modal('show');
 });
 
-// Delete a device
+// Update a device
 $(document).on('click', '.edit-device', function() {
     $('#editDevice').modal('show');
 });
