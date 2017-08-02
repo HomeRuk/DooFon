@@ -129,7 +129,10 @@ function saveTokenFCM(currentToken) {
         contentType: "application/json;",
         data: JSON.stringify(obj),
         success: function (data) {
-            console.log("Success : id -> " + user_id + " FCMtokenweb -> " + currentToken + " sid ->" + sid);
+            //console.log("Success : id -> " + user_id + " FCMtokenweb -> " + currentToken + " sid ->" + sid);
+            console.log("Success : id -> " + user_id);
+            console.log("FCMtokenweb -> " + currentToken);
+            console.log("sid -> " + sid);
         },
         error: function (data) {
             console.log("Error :");
