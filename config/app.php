@@ -160,13 +160,15 @@ return [
         Cornford\Googlmapper\MapperServiceProvider::class,
         Jcf\Geocode\GeocodeServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        App\Providers\RouteServiceProvider::class
 
     ],
 
@@ -221,7 +223,8 @@ return [
         'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,
         'Geocode' => Jcf\Geocode\Facades\Geocode::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
-
+        'Image' => Intervention\Image\Facades\Image::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
     ],
 
 ];
