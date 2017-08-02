@@ -10,10 +10,6 @@
 Route::get('/', 'MainController@index');
 // Authentication
 Route::auth();
-// Registration Routes...
-Route::get('/admin/register', 'Auth\RegisterController@showRegistrationForm');
-Route::post('/admin/register', 'Auth\RegisterController@register');
-
 // API
 Route::group(['middleware' => ['api']], function () {
     // API Show Value
@@ -44,6 +40,14 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/admin/model_predict/download/txt/{model_predict}', 'Admin\Model_PredictController@downloadTXT');
     Route::get('/admin/model_predict/download/pdf/{model_predict}', 'Admin\Model_PredictController@downloadPDF');
     Route::get('/admin/model_predict/stream/pdf/{model_predict}', 'Admin\Model_PredictController@streamPDF');
+    // Registration
+    Route::get('/admin/register', 'Auth\RegisterController@showRegistrationForm');
+    Route::post('/admin/register', 'Auth\RegisterController@register');
+
+    // Account_Management
+    Route::resource('/admin/AccountManagement', 'Admin\Account_ManagementController');
+    // Manual Notification
+    Route::get('/admin/manual/notification', 'Admin\NotificationController@index');
 });
 
 // Web App for User
@@ -52,8 +56,8 @@ Route::group(['middleware' => ['user']], function () {
     Route::get('/user/map', 'User\MapController@index');
     Route::get('/user/map/full', 'User\MapController@mapFull');
     Route::get('/user/report', 'User\WeatherController@chartReport');
-    Route::get('/user/profile', 'User\ProfilesController@index');
-    Route::put('/user/profile', 'User\ProfilesController@update');
+    Route::get('/user/profile', 'User\ProfileController@index');
+    Route::put('/user/profile', 'User\ProfileController@update');
 });
 
 /*
