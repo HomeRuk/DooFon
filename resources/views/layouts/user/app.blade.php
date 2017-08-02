@@ -39,16 +39,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    @if(Request::url() === url('/user/map/'))
-                        <li class="active"><a href="{{ url('/user/map') }}"><i class="fa fa-btn fa-map-marker"></i>แผนที่</a></li>
-                        <li><a href="{{ url('/user/devices/') }}"><i class="fa fa-btn fa-mobile"></i>รายการอุปกรณ์IoT</a></li>
-                    @elseif(Request::url() === url('/user/devices/'))
-                        <li><a href="{{ url('/user/map') }}"><i class="fa fa-btn fa-map-marker"></i>แผนที่</a></li>
-                        <li class="active"><a href="{{ url('/user/devices/') }}"><i class="fa fa-btn fa-mobile"></i>รายการอุปกรณ์IoT</a></li>
-                    @else
-                        <li><a href="{{ url('/user/map') }}"><i class="fa fa-btn fa-map-marker"></i>แผนที่</a></li>
-                        <li><a href="{{ url('/user/devices/') }}"><i class="fa fa-btn fa-mobile"></i>รายการอุปกรณ์IoT</a></li>
-                    @endif
+                    @include('includes.user.navbarLeft')
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
@@ -64,7 +55,6 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('/profiles/'.Auth::user()->id.'/edit/') }}"><i class="fa fa-btn fa-user"></i>แก้ไขข้อมูลส่วนตัว</a></li>
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>ออกจากระบบ</a></li>
                         </ul>
                     </li>

@@ -51,7 +51,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    @include('includes.navbarLeft')
+                    @include('includes.admin.navbarLeft')
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
@@ -59,7 +59,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">
                             <i class="fa fa-user fa-fw"></i> ยินดีตอนรับ
-                            @if(Auth::user()->status == 'Admin')
+                            @if(Auth::user()->status === 'Admin')
                                 {{ Auth::user()->name }} (ผู้ดูแล)
                             @else
                                 {{ Auth::user()->name }}
@@ -67,8 +67,6 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('/admin/register') }}"><i class="fa fa-plus-circle"></i>
-                                    สร้างบัญชีผู้ใช้</a></li>
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>ออกจากระบบ</a></li>
                         </ul>
                     </li>
