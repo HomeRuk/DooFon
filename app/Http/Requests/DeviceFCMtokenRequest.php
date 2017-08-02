@@ -6,14 +6,6 @@ use App\Http\Requests\Request;
 
 class DeviceFCMtokenRequest extends Request {
 
-     /**
-     * The URI to redirect to if validation fails.
-     *
-     * @var string
-     */
-    // redirect ถ้าไม่เป็นไปตาม rule 
-    protected $redirect = 'device';
-    
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -31,8 +23,7 @@ class DeviceFCMtokenRequest extends Request {
     public function rules() {
         return [
             'SerialNumber' => 'required|size:10',
-            //'FCMtoken' => 'required|string|min:140|max:160'
-            'FCMtoken' => 'required|string|max:160',
+            'FCMtoken' => 'required|string|max:200',
             'sid' => 'required',
         ];
     }

@@ -1,3 +1,11 @@
+body {
+    font-family: 'Athiti', sans-serif;
+}
+
+.fa-btn {
+    margin-right: 6px;
+}
+
 div .box-0 {
     padding: 0px;
     border-radius:3px;

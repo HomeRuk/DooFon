@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Device;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 // model 
@@ -16,15 +17,21 @@ class WeatherController extends Controller
         if (empty($device_id)) {
             return abort(404);
         } else {
-            $countW = Weather::where('devices_id', '=', $device_id)->count();
-            $tempWeather = DB::select('SELECT temp AS temperature, created_at AS timeweather FROM weather WHERE devices_id = ? ', [$device_id]);
-            $humidityWeather = DB::select('SELECT humidity, created_at AS timeweather FROM weather WHERE devices_id = ? ', [$device_id]);
-            $dewpointWeather = DB::select('SELECT dewpoint, created_at AS timeweather FROM weather WHERE devices_id = ? ', [$device_id]);
-            $pressureWeather = DB::select('SELECT pressure, created_at AS timeweather FROM weather WHERE devices_id = ? ', [$device_id]);
-            $lightWeather = DB::select('SELECT light, created_at AS timeweather FROM weather WHERE devices_id = ? ', [$device_id]);
-            $rainWeather = DB::select('SELECT rain, created_at AS timeweather FROM weather WHERE devices_id = ? ', [$device_id]);
+            try {
+                $device = Device::findOrFail($device_id);
+                $countW = Weather::where('devices_id', '=', $device_id)->count();
+                $tempWeather = DB::select('SELECT temp AS temperature, created_at AS timeweather FROM weathers WHERE devices_id = ? ', [$device_id]);
+                $humidityWeather = DB::select('SELECT humidity, created_at AS timeweather FROM weathers WHERE devices_id = ? ', [$device_id]);
+                $dewpointWeather = DB::select('SELECT dewpoint, created_at AS timeweather FROM weathers WHERE devices_id = ? ', [$device_id]);
+                $pressureWeather = DB::select('SELECT pressure, created_at AS timeweather FROM weathers WHERE devices_id = ? ', [$device_id]);
+                $lightWeather = DB::select('SELECT light, created_at AS timeweather FROM weathers WHERE devices_id = ? ', [$device_id]);
+                $rainWeather = DB::select('SELECT rain, created_at AS timeweather FROM weathers WHERE devices_id = ? ', [$device_id]);
+            }catch (\Exception $e) {
+                return abort(404);
+            }
         }
         return view('user.weather.report', [
+            'device' => $device,
             'countW' => $countW,
             'tempWeathers' => $tempWeather,
             'humidityWeathers' => $humidityWeather,

@@ -39,7 +39,7 @@
                     <div class="col-md-2">
                         {!! Form::open(['method' => 'GET','url'=>'/admin/devices','role','search' ])!!}
                         <div class="input-group custom-search-form">
-                            <input type="text" name="search" class="form-control" placeholder="ค้นหา SerialNumber">
+                            <input type="search" name="search" class="form-control" placeholder="ค้นหา SerialNumber">
                             <span class="input-group-btn">
                                 <button type="submit" class="btn btn-default-sm">
                                 <i class="fa fa-search"></i>
@@ -69,19 +69,24 @@
                                             <div class="col-md-12">
                                                 <div class="col-md-1">
                                                     <div class="form-group">
-                                                        <img class="img-responsive img-circle"
+                                                        <img class="img-responsive img-circle center-block"
                                                              src="{{ ($device->weather->count() > 0) ? ($device->weather->last()->rain == 1) ? asset('/images/rain128.png') : asset('/images/cloud128.png') : asset('/images/noneCloud.png') }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-7">
                                                     <div class="form-group">
-                                                        <h4>{{ $device->SerialNumber }}
+                                                        <h4>
+                                                            {{ $device->SerialNumber }}
                                                             <small> อัพเดทล่าสุด
-                                                                : {{ $device->updated_at->diffForHumans(Carbon\Carbon::now()) }}</small>
+                                                                : {{ $device->updated_at->diffForHumans(Carbon\Carbon::now()) }}
+                                                                @if($device->id === $deviceIdNew)
+                                                                    <img class="img-responsive img-circle" width="32px" style="display: inline" src="{{ asset('/images/new.svg') }}"/>
+                                                                @endif
+                                                            </small>
                                                         </h4>
                                                     </div>
                                                     <div class="form-group">
-                                                        @if($device->weather()->count()>0 && !is_null($device->weather->last()->PredictPercent))
+                                                        @if(($device->weather()->count()>0) && ($device->weather->last()->PredictPercent != null ))
                                                             @if($device->weather->last()->PredictPercent >= $device->threshold )
                                                                 <button class="btn btn-xs btn-danger">
                                                                     <span class="fa fa-cloud"></span> {{  $device->weather->last()->PredictPercent }}
@@ -193,7 +198,6 @@
             for (var i = 0; i < 10; i++) {
                 SerialNumber += possible.charAt(Math.floor(Math.random() * possible.length));
             }
-            //document.getElementById("SerialNumber").value =  (Math.random()+1).toString(36).substr(2, 10);
             document.getElementById("SerialNumber").value = SerialNumber;
             return false;
         }

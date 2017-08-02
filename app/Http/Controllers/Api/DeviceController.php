@@ -25,14 +25,21 @@ class DeviceController extends Controller
         $latitude = $request->latitude;
         $longitude = $request->longitude;
         $sid = $request->sid;
-        if ($sid == 'Ruk') {
-            Device::where('SerialNumber', '=', $SerialNumber)->update(
-                [
-                    'latitude' => $latitude,
-                    'longitude' => $longitude,
-                ]
-            );
+        if ($sid === 'Ruk') {
+            try {
+                Device::where('SerialNumber', '=', $SerialNumber)->update(
+                    [
+                        'latitude' => $latitude,
+                        'longitude' => $longitude,
+                    ]
+                );
+            } catch (\Exception $e) {
+                return dump('Error Query');
+            }
+        } else {
+            return dump('Error sid : ' . $sid);
         }
+        return dump('Update Location : Success');
     }
 
     // Update Setting Threshold of Device
@@ -41,13 +48,20 @@ class DeviceController extends Controller
         $SerialNumber = $request->SerialNumber;
         $threshold = $request->threshold;
         $sid = $request->sid;
-        if ($sid == 'Ruk') {
-            Device::where('SerialNumber', '=', $SerialNumber)->update(
-                [
-                    'threshold' => $threshold,
-                ]
-            );
+        if ($sid === 'Ruk') {
+            try {
+                Device::where('SerialNumber', '=', $SerialNumber)->update(
+                    [
+                        'threshold' => $threshold,
+                    ]
+                );
+            } catch (\Exception $e) {
+                return dump('Error Query');
+            }
+        } else {
+            return dump('Error sid : ' . $sid);
         }
+        return dump('Update Threshold : Success');
     }
 
     // Update FCMtoken Device to Database
@@ -55,17 +69,25 @@ class DeviceController extends Controller
     {
         $SerialNumber = $request->SerialNumber;
         $FCMtoken = $request->FCMtoken;
-        dump($request->FCMtoken);
         $sid = $request->sid;
-        if (strlen($FCMtoken) < 100) $FCMtoken = NULL;
-        if ($FCMtoken === '0') $FCMtoken = NULL;
-        if ($sid == 'Ruk') {
-            Device::where('SerialNumber', '=', $SerialNumber)->update(
-                [
-                    'FCMtoken' => $FCMtoken,
-                ]
-            );
+        dump($request->FCMtoken);
+        if (strlen($FCMtoken) < 100 || $FCMtoken === null) {
+            return dump('Error validation data fail : ' . strlen($FCMtoken));
         }
+        if ($sid === 'Ruk') {
+            try {
+                Device::where('SerialNumber', '=', $SerialNumber)->update(
+                    [
+                        'FCMtoken' => $FCMtoken,
+                    ]
+                );
+            } catch (\Exception $e) {
+                return dump('Error Query');
+            }
+        } else {
+            return dump('Error sid : ' . $sid);
+        }
+        return dump('Update token_fcmweb : Success');
     }
 
 
@@ -103,9 +125,9 @@ class DeviceController extends Controller
         $response = file_get_contents($api_url, FALSE, $context);
 
         if ($response === FALSE) {
-            die ('Error Alert of Device');
+            dump('Error Alert of Device');
         } else {
-            echo $response;
+            dump($response);
         }
     }
 }

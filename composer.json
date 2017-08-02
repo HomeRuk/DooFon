@@ -9,12 +9,13 @@
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "5.2.*",
         "barryvdh/laravel-debugbar": "^2.3",
-        "muhamadrezaar/highcharts": "^1.0",
-        "intervention/image": "^2.3",
+        "muhamadrezaar/highcharts": "1.0",
+        "intervention/image": "^2.4",
         "niklasravnsborg/laravel-pdf": "^1.1",
         "uxweb/sweet-alert": "~1.4",
         "cornford/googlmapper": "2.*",
-        "jcf/geocode": "1.2.*"
+        "jcf/geocode": "1.2.*",
+        "simplesoftwareio/simple-qrcode": "~1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

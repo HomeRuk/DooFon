@@ -13,6 +13,8 @@ use DB;
 use Jcf\Geocode\Geocode;
 use Illuminate\Support\Facades\Auth;
 use Alert;
+use QrCode;
+use File;
 
 class DeviceController extends Controller
 {
@@ -28,8 +30,10 @@ class DeviceController extends Controller
         $devices = User::findOrFail(Auth::user()->id)->device()
             ->where('SerialNumber', 'like', '%' . $searchSerialNumber . '%')
             ->orderBy('updated_at', 'desc')->paginate(10);
+        $deviceIdNew = Device::orderBy('updated_at', 'desc')->first()->id;
         return view('user.device.index', [
             'devices' => $devices,
+            'deviceIdNew' => $deviceIdNew
         ]);// user/device/index.blade.php
     }
 
@@ -40,8 +44,7 @@ class DeviceController extends Controller
      */
     public function create()
     {
-        //return view('user.device.create');
-        // /user/device/create.blade.php
+        return abort(404);
     }
 
     /**
@@ -67,15 +70,9 @@ class DeviceController extends Controller
         return redirect()->action('User\DeviceController@index');
     }
 
-    public function edit($device_id)
+    public function edit()
     {
-      /*  $device = User::findOrFail(Auth::user()->id)->device()->findOrFail($device_id);
-        if (empty($device)) {
-            abort(404);
-        }
-        return view('user.device.edit', [
-            'device' => $device,
-        ]);*/
+        return abort(404);
     }
 
     public function update(Request $request, $device_id)
@@ -99,6 +96,14 @@ class DeviceController extends Controller
     {
         $device = User::find(Auth::user()->id)->device()->findOrFail($device_id);
         $dWeather = Weather::where('devices_id', '=', $device->id)->orderBy('id', 'asc')->paginate(50);
+        $qrcodeFile = public_path() . '/qrcodes/' . $device->SerialNumber . '.png';
+        if (!File::exists($qrcodeFile)) {
+            QrCode::format('png')
+                ->merge('../public/images/rain64.png', .15)
+                ->size(300)
+                ->margin(2)
+                ->generate($device->SerialNumber, '../public/qrcodes/'.$device->SerialNumber.'.png');
+        }
         try {
             $response = Geocode::make()->latLng($device->latitude, $device->longitude);
             $response ? $address = $response->formattedAddress() : $address = null;

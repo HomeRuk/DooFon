@@ -8,7 +8,7 @@
 @section('content')
 
     <?php
-    if ($tempWeathers == null || $humidityWeathers == null || $dewpointWeathers == null || $pressureWeathers == null || $rainWeathers == null) {
+    if ($tempWeathers === null || $humidityWeathers === null || $dewpointWeathers === null || $pressureWeathers === null || $rainWeathers === null) {
     } else {
         // Temperature
         $tempOver = [];
@@ -641,7 +641,8 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <span class="fa fa-cloud fa-5x"></span>
-                <span style="font-size:38px; margin-left: 2%">รายงานสภาพอากาศ</span>
+                <span style="font-size:38px; margin-left: 2%">รายงานสภาพอากาศ </span> อุปกรณ์ IoT :
+                <a href="{{ url('/user/devices/'.$device->id) }}">{{ $device->SerialNumber }}</a>
             </div>
         </div>
         <hr>

@@ -18,7 +18,7 @@ class User extends Authenticatable
         'username',
         'password',
         'status',
-        'token_fcmweb'
+        'FCMTokenweb'
     ];
 
     /**
@@ -37,4 +37,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Device', 'device_users', 'users_id', 'device_id')->withTimestamps();
     }
+
+    public function profile() {
+        return $this->hasOne(Profile::class,'usersp_id');
+    }
+
 }
