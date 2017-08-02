@@ -9,6 +9,8 @@ use App\Device;
 use App\Weather;
 use Jcf\Geocode\Geocode;
 use Alert;
+use QrCode;
+use File;
 
 class DeviceController extends Controller
 {
@@ -24,8 +26,10 @@ class DeviceController extends Controller
         $searchSerialNumber = $request->get('search');
         $devices = Device::where('SerialNumber', 'like', '%' . $searchSerialNumber . '%')
             ->orderBy('updated_at', 'desc')->paginate(10);
+        $deviceIdNew = Device::orderBy('updated_at', 'desc')->first()->id;
         return view('admin.device.index', [
             'devices' => $devices,
+            'deviceIdNew' => $deviceIdNew
         ]);// admin/device/index.blade.php
     }
 
@@ -42,7 +46,7 @@ class DeviceController extends Controller
 
     /**
      * Store Device
-     * URL Path : /Devices
+     * URL Path : /Admin/Devices
      * Method : POST
      * @param DeviceRequest $request
      * @internal param $App /Http/Requests/DeviceRequest $request
@@ -93,6 +97,14 @@ class DeviceController extends Controller
     {
         $device = Device::findOrFail($id);
         $dWeather = Weather::where('devices_id', '=', $device->id)->orderBy('id', 'asc')->paginate(50);
+        $qrcodeFile = public_path() . '/qrcodes/' . $device->SerialNumber . '.png';
+        if (!File::exists($qrcodeFile)) {
+            QrCode::format('png')
+                ->merge('../public/images/rain64.png', .15)
+                ->size(300)
+                ->margin(2)
+                ->generate($device->SerialNumber, '../public/qrcodes/'.$device->SerialNumber.'.png');
+        }
         try {
             $response = Geocode::make()->latLng($device->latitude, $device->longitude);
             $response ? $address = $response->formattedAddress(): $address = null;

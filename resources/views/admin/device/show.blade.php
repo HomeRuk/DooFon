@@ -50,33 +50,16 @@
                                         </span>
                                     </div>
                                 </div>
+
                                 <div class="col-md-3">
-                                    @if($device->weather()->count()>0)
-                                        <div class="form-group">
-                                            <h4>สถาพอากาศล่าสุด</h4>
-                                            <button class="btn btn-sm">
-                                                <span class="fa fa-thermometer-empty"></span> {{ $device->weather->last()->temp }}
-                                                °C
-                                            </button>
-                                            <button class="btn btn-sm">
-                                                <img src="{{ asset('/images/humidity.png') }}"
-                                                     style="max-height:14px; max-width:100%"></span> {{ $device->weather->last()->humidity }}
-                                                %
-                                            </button>
-                                            <button class="btn btn-sm">
-                                                <span class="fa fa-tint"></span> {{ $device->weather->last()->dewpoint }}
-                                                °C
-                                            </button>
-                                            <button class="btn btn-sm">
-                                                <span class="fa fa-tachometer"></span> {{ $device->weather->last()->pressure }}
-                                                hPa
-                                            </button>
-                                            <button class="btn btn-sm">
-                                                <span class="fa fa-lightbulb-o"></span> {{ $device->weather->last()->light }}
-                                            </button>
-                                        </div>
-                                    @endif
+                                    <div class="form-group">
+                                        <a href="{{ asset('qrcodes/'. $device->SerialNumber .'.png') }}" data-lity>
+                                            <img class="center-block" src="{{ asset('qrcodes/'. $device->SerialNumber .'.png') }}"
+                                                 alt="{{ $device->SerialNumber }}" width="125px" height="125px"/>
+                                        </a>
+                                    </div>
                                 </div>
+
                                 <div class="col-md-4">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -123,6 +106,32 @@
                             <span style="font-size:38px; margin-left: 2%">ประวัติสภาพอากาศ</span>
                         </div>
                     </div>
+                    <hr>
+                    @if($device->weather()->count()>0)
+                        <div class="form-group">
+                            <b>สถาพอากาศล่าสุด: </b>
+                            <button class="btn btn-sm">
+                                <span class="fa fa-thermometer-empty"></span> {{ $device->weather->last()->temp }}
+                                °C
+                            </button>
+                            <button class="btn btn-sm">
+                                <img src="{{ asset('/images/humidity.png') }}"
+                                     style="max-height:14px; max-width:100%"></span> {{ $device->weather->last()->humidity }}
+                                %
+                            </button>
+                            <button class="btn btn-sm">
+                                <span class="fa fa-tint"></span> {{ $device->weather->last()->dewpoint }}
+                                °C
+                            </button>
+                            <button class="btn btn-sm">
+                                <span class="fa fa-tachometer"></span> {{ $device->weather->last()->pressure }}
+                                hPa
+                            </button>
+                            <button class="btn btn-sm">
+                                <span class="fa fa-lightbulb-o"></span> {{ $device->weather->last()->light }}
+                            </button>
+                        </div>
+                    @endif
                     <hr>
                     <div class="row">
                         <div class="col-md-12">
