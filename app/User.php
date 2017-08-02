@@ -38,8 +38,8 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Device', 'device_users', 'users_id', 'device_id')->withTimestamps();
     }
 
-    public function profiles() {
-        return $this->hasOne(Profiles::class,'usersp_id');
+    public function profile() {
+        return $this->hasOne(Profile::class,'usersp_id');
     }
 
 }
