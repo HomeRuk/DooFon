@@ -33,6 +33,7 @@
                                 {{ Form::label('threshold', 'threshold')  }}
                                 {{ Form::number('threshold',null,['class' => 'form-control input-lg','placeholder'=>'Ex. 70','required','min'=>'1','max'=>'100']) }}
                             </div>
+                            <hr/>
                             <div class="form-group">
                                 {{ Form::submit('สร้าง',['class' => 'btn btn-lg btn-primary btn-block']) }}
                             </div>

@@ -25,6 +25,7 @@
                                 {{ Form::text('SerialNumber',null,['class' => 'form-control input-lg','placeholder'=>'Ex. AsZsXsweRq','pattern'=>'[0-9a-zA-Z]{10}','title'=>'กรุณากรอกตัวเลขหรือตัวอักษรภาษาอังกฤษรวม 10 หลัก','required autofocus']) }}
                             </div>
                         </div>
+                            <hr/>
                         <div class="col-md-12">
                             <div class="form-group">
                                 {{ Form::submit('เพิ่ม',['class' => 'btn btn-lg btn-primary btn-block']) }}
