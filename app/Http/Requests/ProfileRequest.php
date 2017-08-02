@@ -24,7 +24,8 @@ class ProfileRequest extends Request {
         return [
             'name' => 'required|String',
             'email' => 'required|email',
-            'tel' => 'required|String',
+//            'tel' => 'required|String',
+            'image' => 'mimes:jpeg,png',
         ];
     }
 
@@ -33,7 +34,8 @@ class ProfileRequest extends Request {
             'name.required' => 'กรุณากรอกชื่อ',
             'email.required' => 'กรุณากรอกอีเมล์',
             'email.email' => 'กรุณากรอกอีเมล์ให้ถูกต้อง',
-            'tel.required' => 'กรุณากรอกตัวเลขเบอร์โทรศัพท์',
+//            'tel.required' => 'กรุณากรอกตัวเลขเบอร์โทรศัพท์',
+            'image.mimes' => 'กรุณาเลือกรูปภาพนามสกุล png, jpg',
         ];
     }
 
