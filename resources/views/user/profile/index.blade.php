@@ -32,7 +32,7 @@
                         <div class="col-xs-12">
                             <div class="form-group form-group-lg">
                                 {{ Form::label('tel', 'โทรศัพท์')  }}
-                                {{ Form::text('tel',isset($user->profiles->tel) ? $user->profiles->tel : null ,['class' => 'form-control','disabled']) }}
+                                {{ Form::text('tel',isset($user->profile->tel) ? $user->profile->tel : null ,['class' => 'form-control','disabled']) }}
                             </div>
                         </div>
                         <hr>
@@ -81,7 +81,7 @@
                     <div class="col-md-12">
                         <div class="form-group form-group-lg">
                             {{ Form::label('tel', 'โทรศัพท์')  }}
-                            {{ Form::text('tel',isset($user->profiles->tel) ? $user->profiles->tel : null ,['class' => 'form-control','pattern'=>'[0-9]{10}','title'=>'กรุณากรอกตัวเลข 10 หลัก']) }}
+                            {{ Form::text('tel',isset($user->profile->tel) ? $user->profile->tel : null ,['class' => 'form-control','pattern'=>'[0-9]{10}','title'=>'กรุณากรอกตัวเลข 10 หลัก']) }}
                         </div>
                     </div>
                 </div>
@@ -99,5 +99,5 @@
 @endsection
 
 @section('footer')
-   <script type="text/javascript" src="{{asset('/js/jQueryUserProfile.js')}}"></script>
-    @endsection
+    <script type="text/javascript" src="{{asset('/js/jQueryUserProfile.js')}}"></script>
+@endsection
